@@ -1,6 +1,6 @@
 1º Função:
 
-- Mapeia os processos da máquina, guarda em um cache temporário em forma de lista, sendo cada um deles um objeto
+- Mapeia os processos da máquina, guarda em uma lista, sendo cada um dos processos um objeto
 
 2º Função:
 
