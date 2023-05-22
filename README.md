@@ -12,6 +12,7 @@
 - Aguarda o próximo processo a ser iniciado na máquina
 - Realiza as técnicas de mitigação
 - Retorna status id correspondente
+- Atualiza a lista
 - Notifica o usuário
 - Encerra evento
 - verify mode = False

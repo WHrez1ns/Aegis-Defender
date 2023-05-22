@@ -1,8 +1,10 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import psutil
+import win32con
+import win32api
+import win32traceutil
 from Process import Process
-from Event import Event
 
 
 def check_one_checked():
@@ -38,12 +40,22 @@ def show_alert():
         messagebox.showinfo("Alerta", "Certo, você optou por não realizar o backup dos dados neste momento. Lembre-se de que essa opção pode ser selecionada posteriormente, caso você queira fazer o backup dos seus dados para garantir sua segurança. Recomendamos que você faça o backup regularmente para evitar a perda de informações importantes. Se surgir a necessidade, você pode acessar a opção de backup nas configurações do Aegis Defender. Fique à vontade para escolher essa opção sempre que considerar apropriado")
 
 
+def callback(data):
+    process_name = win32api.GetModuleFileName(data.Process)
+    messagebox.showwarning("Aviso", f"Novo processo iniciado: {process_name}")
+    print('teste callback')
+
+
 def verify_mode():
-    print("Modo de verificação ativo...")
+    messagebox.showinfo("Alerta", "Modo de verificação LIGADO")
+    win32traceutil.Initialize()
+    win32traceutil.AddCallback(callback)
+    win32traceutil.WaitForTraceEvent(win32con.INFINITE)
+    checkbox1.deselect()
 
 
 def constant_mode():
-    print("Modo constante ativo...")
+    messagebox.showinfo("Alerta", "Modo constante LIGADO")
 
 
 def start_exe():
@@ -59,9 +71,6 @@ def start_exe():
             constant_mode()
     except:
         pass
-
-# messagebox.showerror("Erro", "O arquivo selecionado não é um arquivo Excel (.xlsx)")
-# messagebox.showwarning("Aviso", "Selecione uma opção de orientação para salvar como PDF")
 
 
 processos_lista = []
