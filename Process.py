@@ -6,6 +6,6 @@ class Process:
 
     def __str__(self) -> str:
         return f'''
-        Nome: {self.nome}
+        Nome: {self.nome},
         PID: {self.pid},
         Status: {self.status}'''

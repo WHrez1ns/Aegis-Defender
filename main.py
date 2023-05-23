@@ -1,9 +1,7 @@
 import tkinter as tk
 from tkinter import ttk, messagebox
 import psutil
-import win32con
-import win32api
-import win32traceutil
+import wmi
 from Process import Process
 
 
@@ -40,22 +38,26 @@ def show_alert():
         messagebox.showinfo("Alerta", "Certo, você optou por não realizar o backup dos dados neste momento. Lembre-se de que essa opção pode ser selecionada posteriormente, caso você queira fazer o backup dos seus dados para garantir sua segurança. Recomendamos que você faça o backup regularmente para evitar a perda de informações importantes. Se surgir a necessidade, você pode acessar a opção de backup nas configurações do Aegis Defender. Fique à vontade para escolher essa opção sempre que considerar apropriado")
 
 
-def callback(data):
-    process_name = win32api.GetModuleFileName(data.Process)
-    messagebox.showwarning("Aviso", f"Novo processo iniciado: {process_name}")
-    print('teste callback')
-
-
 def verify_mode():
     messagebox.showinfo("Alerta", "Modo de verificação LIGADO")
-    win32traceutil.Initialize()
-    win32traceutil.AddCallback(callback)
-    win32traceutil.WaitForTraceEvent(win32con.INFINITE)
-    checkbox1.deselect()
+    try:
+        wmi_service = wmi.WMI()
+        watcher = wmi_service.Win32_Process.watch_for("creation")
+        while checkbox1_state.get() == 1:
+            process = watcher()
+            on_new_process_created(process)
+            checkbox1.deselect()
+    except Exception as e:
+        messagebox.showerror("Erro", f"Erro: {e}")
 
 
 def constant_mode():
     messagebox.showinfo("Alerta", "Modo constante LIGADO")
+
+
+def on_new_process_created(process):
+    messagebox.showwarning(
+        "Aviso", f"Novo processo encontrado: {process.Name}")
 
 
 def start_exe():
@@ -64,23 +66,20 @@ def start_exe():
             "Aviso", "Selecione um modo de execução para iniciar")
         return
 
-    try:
-        if checkbox1_state.get() == 1:
-            verify_mode()
-        else:
-            constant_mode()
-    except:
-        pass
+    if checkbox1_state.get() == 1:
+        verify_mode()
+    else:
+        constant_mode()
 
 
 processos_lista = []
 processos = psutil.process_iter()
 mapping_processes()
+show_alert()
 
 root = tk.Tk()
 icon = "img/aegis.ico"
 root.iconbitmap(icon)
-show_alert()
 root.title("Aegis Defender")
 root.geometry("400x200")
 menubar = tk.Menu(root)
