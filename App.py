@@ -20,26 +20,29 @@ def mapping_processes():
         try:
             new_process = Process(
                 processo.name(), processo.pid, processo.status())
-            processos_lista.append(new_process)
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
 
 
+def analyzing_process():
+    print("Chamando as técnicas de análise")
+
+
 def show_help():
-    messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo de verificação: este modo é responsável por analisar o próximo processo que for executado na máquina e determinar se ele é um possível malware.\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis malwares.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.\n\nDúvidas? Entre em contato: contato@aegisdefender.org")
+    messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo de verificação: este modo é responsável por analisar o próximo processo que for executado na máquina e determinar se ele é um possível malware.\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis malwares.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
 
 
-def show_alert():
-    resposta = messagebox.askyesno(
-        "Pergunta", "Você deseja fazer backup dos dados? (Recomendado)")
-    if resposta:
-        print("Iniciando backup...")
-    else:
-        messagebox.showinfo("Alerta", "Certo, você optou por não realizar o backup dos dados neste momento. Lembre-se de que essa opção pode ser selecionada posteriormente, caso você queira fazer o backup dos seus dados para garantir sua segurança. Recomendamos que você faça o backup regularmente para evitar a perda de informações importantes. Se surgir a necessidade, você pode acessar a opção de backup nas configurações do Aegis Defender. Fique à vontade para escolher essa opção sempre que considerar apropriado")
+# def show_alert():
+#     resposta = messagebox.askyesno(
+#         "Pergunta", "Você deseja fazer backup dos dados? (Recomendado)")
+#     if resposta:
+#         print("Iniciando backup...")
+#     else:
+#         messagebox.showinfo("Alerta", "Certo, você optou por não realizar o backup dos dados neste momento. Lembre-se de que essa opção pode ser selecionada posteriormente, caso você queira fazer o backup dos seus dados para garantir sua segurança. Recomendamos que você faça o backup regularmente para evitar a perda de informações importantes. Se surgir a necessidade, você pode acessar a opção de backup nas configurações do Aegis Defender. Fique à vontade para escolher essa opção sempre que considerar apropriado")
 
 
 def verify_mode():
-    messagebox.showinfo("Alerta", "Modo de verificação LIGADO")
+    print("\033[32m| Modo de verificação: LIGADO")
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
@@ -47,12 +50,14 @@ def verify_mode():
             process = watcher()
             on_new_process_created(process)
             checkbox1.deselect()
+            print("\033[31m| Modo de verificação: DESLIGADO")
     except Exception as e:
         messagebox.showerror("Erro", f"Erro: {e}")
 
 
 def constant_mode():
-    messagebox.showinfo("Alerta", "Modo constante LIGADO")
+    print("\033[32mModo constante: LIGADO")
+    print("\033[31mModo de verificação: DESLIGADO")
 
 
 def on_new_process_created(process):
@@ -75,7 +80,7 @@ def start_exe():
 processos_lista = []
 processos = psutil.process_iter()
 mapping_processes()
-show_alert()
+# show_alert()
 
 root = tk.Tk()
 icon = "img/aegis.ico"
@@ -85,7 +90,7 @@ root.geometry("400x200")
 menubar = tk.Menu(root)
 menu_principal = tk.Menu(menubar, tearoff=0)
 menu_principal.add_command(label="Ajuda", command=show_help)
-menu_principal.add_command(label="Backup", command=show_alert)
+# menu_principal.add_command(label="Backup", command=show_alert)
 menu_principal.add_command(label="Sair", command=exit)
 menubar.add_cascade(label="Configurações", menu=menu_principal)
 root.config(menu=menubar)
