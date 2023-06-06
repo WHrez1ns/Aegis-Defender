@@ -3,7 +3,9 @@ from tkinter import ttk, messagebox
 import psutil
 import wmi
 from Process import Process
-import hashlib
+import os
+import ctypes
+import sys
 
 
 def check_one_checked():
@@ -17,6 +19,8 @@ def check_two_checked():
 
 
 def mapping_processes():
+    processos = psutil.process_iter()
+
     for processo in processos:
         try:
             new_process = Process(
@@ -31,58 +35,26 @@ def show_help():
 
 
 def on_new_process_created(process):
+    print(f"\033[38m===================================================")
     print(f"\033[35m| Novo processo encontrado: {process.Name}")
 
 
-def verificar_hash_processo(process, lista_hashes_conhecidos):
-    try:
-        processid = psutil.Process(process.ProcessId)
-        estado_processo = processid.as_dict(attrs=['memory_info'])
-
-        hash_objeto = hashlib.sha256(str(estado_processo).encode())
-        hash_calculado = hash_objeto.hexdigest()
-
-        if hash_calculado in lista_hashes_conhecidos:
-            processid.terminate()
-            print(
-                f"\033[31m| [PERIGOSO] O hash do processo {process.Name} é conhecido.")
-        else:
-            print(
-                f"\033[32m| [SEGURO] O hash do processo {process.Name} não é conhecido.")
-    except psutil.NoSuchProcess:
-        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado.")
-    except psutil.AccessDenied:
-        print(
-            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}.')
-    except IndexError:
-        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado.")
-    except wmi.x_wmi:
-        print(
-            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}.')
-
-
 def verificar_instancia_processo(process):
+    checks = {
+        "ReadOperationCount": (int(process.ReadOperationCount), 1000),
+        "WriteOperationCount": (int(process.WriteOperationCount), 200),
+        "PageFaults": (process.PageFaults, 1000),
+        "ThreadCount": (process.ThreadCount, 100),
+        "HandleCount": (process.HandleCount, 200),
+        "KernelModeTime": (process.KernelModeTime, "00:03:25")
+    }
+
     try:
-        processid = psutil.Process(process.ProcessId)
+        # processid = psutil.Process(process.ProcessId)
 
-        if int(process.ReadOperationCount) > 50:
-            print(
-                f"\033[33m| [SUSPEITO] ReadOperationCount > 50: {process.ReadOperationCount}")
-        if int(process.WriteOperationCount) > 10:
-            print(
-                f"\033[33m| [SUSPEITO] WriteOperationCount > 10: {process.WriteOperationCount}")
-        if process.PageFaults > 1000:
-            print(
-                f"\033[33m| [SUSPEITO] PageFaults > 1000: {process.PageFaults}")
-        if process.ThreadCount > 5:
-            print(
-                f"\033[33m| [SUSPEITO] ThreadCount > 5: {process.ThreadCount}")
-        if process.HandleCount > 200:
-            print(
-                f"\033[33m| [SUSPEITO] HandleCount > 200: {process.HandleCount}")
-        if process.KernelModeTime == "00:03:25":
-            print(f"\033[33m| [SUSPEITO] KernelModeTime: {process.Name}")
-
+        for key, (value, threshold) in checks.items():
+            if value > threshold:
+                print(f"\033[33m| [SUSPEITO] {key} > {threshold}: {value}")
     except psutil.NoSuchProcess:
         print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado.")
     except psutil.AccessDenied:
@@ -93,6 +65,14 @@ def verificar_instancia_processo(process):
     except wmi.x_wmi:
         print(
             f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}.')
+
+
+def analyse(process):
+    for objeto in processos_lista:
+        if objeto.nome == process.Name:
+            return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido")
+    print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
+    verificar_instancia_processo(process)
 
 
 def verify_mode():
@@ -103,8 +83,7 @@ def verify_mode():
         while checkbox1_state.get() == 1:
             process = watcher()
             on_new_process_created(process)
-            # verificar_hash_processo(process, lista_hashs)
-            verificar_instancia_processo(process)
+            analyse(process)
             checkbox1.deselect()
             print("\033[31m| Modo de verificação: DESLIGADO")
     except Exception as e:
@@ -119,8 +98,7 @@ def constant_mode():
         while checkbox2_state.get() == 1:
             process = watcher()
             on_new_process_created(process)
-            # verificar_hash_processo(process, lista_hashs)
-            verificar_instancia_processo(process)
+            analyse(process)
     except Exception as e:
         messagebox.showerror("Erro", f"Erro: {e}")
 
@@ -136,11 +114,22 @@ def start_exe():
     else:
         constant_mode()
 
+"""
+current_file = os.path.abspath(__file__)
 
-lista_hashs = ['hash1', 'hash2', 'hash3']
+if not ctypes.windll.shell32.IsUserAnAdmin():
+    # Executa o programa novamente com privilégios de administrador
+    ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, current_file, None, 1)
+    sys.exit(0)
+
+print("=======================================")
+print(f"\033[33m| [AVISO] Executando como Administrador")
+print("=======================================")
+"""
+
 processos_lista = []
-processos = psutil.process_iter()
 mapping_processes()
+
 
 root = tk.Tk()
 icon = "img/aegis.ico"
