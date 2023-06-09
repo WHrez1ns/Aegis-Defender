@@ -6,6 +6,7 @@ from Process import Process
 import os
 import ctypes
 import sys
+from sklearn import tree
 
 
 def check_one_checked():
@@ -20,7 +21,6 @@ def check_two_checked():
 
 def mapping_processes():
     processos = psutil.process_iter()
-
     for processo in processos:
         try:
             new_process = Process(
@@ -41,30 +41,48 @@ def on_new_process_created(process):
 
 def verificar_instancia_processo(process):
     checks = {
-        "ReadOperationCount": (int(process.ReadOperationCount), 1000),
-        "WriteOperationCount": (int(process.WriteOperationCount), 200),
+        "ReadOperationCount": (int(process.ReadOperationCount), 5000),
+        "WriteOperationCount": (int(process.WriteOperationCount), 1000),
         "PageFaults": (process.PageFaults, 1000),
         "ThreadCount": (process.ThreadCount, 100),
         "HandleCount": (process.HandleCount, 200),
         "KernelModeTime": (process.KernelModeTime, "00:03:25")
     }
 
+    status_list = []
+
     try:
-        # processid = psutil.Process(process.ProcessId)
+        processid = psutil.Process(process.ProcessId)
 
         for key, (value, threshold) in checks.items():
             if value > threshold:
                 print(f"\033[33m| [SUSPEITO] {key} > {threshold}: {value}")
+                status_list.append(1)
+            else:
+                status_list.append(0)
+        status_id = classif.predict([status_list])
+        if status_id == 0:
+            print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
+        elif status_id == 1:
+            resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui algumas chamadas suspeitas, você deseja encerrar o processo?")
+            if resposta == "sim" or resposta == "yes":
+                processid.terminate()
+                print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
+            else:
+                print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
+        else:
+            processid.terminate()
+            print(f"\033[31m| [PERIGOSO] Status id: 2 | {process.Name}")
     except psutil.NoSuchProcess:
-        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado.")
+        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
     except psutil.AccessDenied:
         print(
-            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}.')
+            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}')
     except IndexError:
-        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado.")
+        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
     except wmi.x_wmi:
         print(
-            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}.')
+            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}')
 
 
 def analyse(process):
@@ -108,7 +126,6 @@ def start_exe():
         messagebox.showwarning(
             "Aviso", "Selecione um modo de execução para iniciar")
         return
-
     if checkbox1_state.get() == 1:
         verify_mode()
     else:
@@ -127,9 +144,30 @@ print(f"\033[33m| [AVISO] Executando como Administrador")
 print("=======================================")
 """
 
+features = [
+    [0, 0, 0, 0, 0, 0], # status id = 0
+    [1, 0, 0, 1, 0, 0], # status id = 0
+    [0, 0, 0, 0, 1, 1], # status id = 0
+    [1, 1, 0, 0, 0, 0], # status id = 0
+    [0, 0, 1, 1, 0, 0], # status id = 0
+    [1, 0, 1, 0, 0, 0], # status id = 0
+    [0, 1, 0, 1, 0, 1], # status id = 0
+    [0, 1, 1, 1, 0, 1], # status id = 1
+    [1, 1, 1, 1, 0, 0], # status id = 1
+    [0, 0, 1, 1, 1, 1], # status id = 1
+    [1, 1, 0, 1, 0, 1], # status id = 1
+    [1, 1, 1, 1, 0, 1], # status id = 1
+    [0, 1, 1, 1, 1, 1], # status id = 1
+    [1, 1, 0, 1, 1, 1], # status id = 1
+    [1, 1, 1, 1, 1, 1], # status id = 2
+]
+
+labels = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2]
+classif = tree.DecisionTreeClassifier()
+classif.fit(features, labels)
+
 processos_lista = []
 mapping_processes()
-
 
 root = tk.Tk()
 icon = "img/aegis.ico"
@@ -153,15 +191,19 @@ label_frame.grid(row=1, column=0, padx=10, pady=10, sticky="w")
 label = tk.Label(label_frame, text="Modo de verificação")
 label.grid(row=0, column=0, padx=6, pady=6)
 
-checkbox1 = tk.Checkbutton(label_frame, text="Marcar",
-                           variable=checkbox1_state, command=check_one_checked)
+checkbox1 = tk.Checkbutton(label_frame,
+                           text="Marcar",
+                           variable=checkbox1_state,
+                           command=check_one_checked)
 checkbox1.grid(row=0, column=1, padx=5, pady=5)
 
 label = tk.Label(label_frame, text="Modo constante")
 label.grid(row=1, column=0, padx=6, pady=6)
 
-checkbox2 = tk.Checkbutton(label_frame, text="Marcar",
-                           variable=checkbox2_state, command=check_two_checked)
+checkbox2 = tk.Checkbutton(label_frame,
+                           text="Marcar",
+                           variable=checkbox2_state,
+                           command=check_two_checked)
 checkbox2.grid(row=1, column=1, padx=5, pady=5)
 
 button = ttk.Button(
