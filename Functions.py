@@ -64,7 +64,7 @@ def verificar_instancia_processo(process):
         if status_id == 0:
             print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
         elif status_id == 1:
-            resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui algumas chamadas suspeitas, você deseja encerrar o processo?")
+            resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui um comportamento suspeito e pode danificar seu computador. Deseja encerrá-lo? No caso do programa ser desconhecido, recomenda-se o encerramento do mesmo.")
             if resposta == "sim" or resposta == "yes":
                 processid.terminate()
                 print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
@@ -160,7 +160,7 @@ def main():
         [0, 0, 1, 1, 1, 1],  # status id = 1
         [1, 1, 0, 1, 0, 1],  # status id = 1
         [1, 1, 1, 1, 0, 1],  # status id = 1
-        [0, 1, 1, 1, 1, 1],  # status id = 1
+        [1, 1, 1, 1, 1, 0],  # status id = 1
         [1, 1, 0, 1, 1, 1],  # status id = 1
         [1, 1, 1, 1, 1, 1],  # status id = 2
     ]
