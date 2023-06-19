@@ -4,9 +4,6 @@ import psutil
 import wmi
 from Process import Process
 from sklearn import tree
-import os
-import ctypes
-import sys
 
 
 def check_one_checked():
@@ -69,7 +66,7 @@ def verificar_instancia_processo(process):
                 processid.terminate()
                 print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
             else:
-                print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
+                print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
         else:
             processid.terminate()
             print(f"\033[31m| [PERIGOSO] Status id: 2 | {process.Name}")
@@ -133,19 +130,6 @@ def start_exe():
 
 
 def main():
-    """
-    current_file = os.path.abspath(__file__)
-
-    if not ctypes.windll.shell32.IsUserAnAdmin():
-        # Executa o programa novamente com privilégios de administrador
-        ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, current_file, None, 1)
-        sys.exit(0)
-
-    print("=======================================")
-    print(f"\033[33m| [AVISO] Executando como Administrador")
-    print("=======================================")
-    """
-
     global features
     features = [
         [0, 0, 0, 0, 0, 0],  # status id = 0
