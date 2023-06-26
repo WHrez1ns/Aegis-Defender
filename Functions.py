@@ -21,7 +21,7 @@ def mapping_processes():
     for processo in processos:
         try:
             new_process = Process(
-                processo.name(), processo.pid, processo.status())
+                processo.name(), processo.pid)
             processos_lista.append(new_process)
         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
             pass
@@ -59,6 +59,9 @@ def verificar_instancia_processo(process):
         print(f"\033[34m| [VERIFICAÇÃO] Status list: {status_list}")
         status_id = classif.predict([status_list])
         if status_id == 0:
+            new_process = Process(
+                process.Name, process.ProcessId)
+            processos_lista.append(new_process)
             print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
         elif status_id == 1:
             resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui um comportamento suspeito e pode danificar seu computador. Deseja encerrá-lo? No caso do programa ser desconhecido, recomenda-se o encerramento do mesmo.")
