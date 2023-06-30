@@ -184,15 +184,15 @@ def main():
         root, text="Modos de execução:", font=("Arial", 12))
     label_frame.grid(row=1, column=0, padx=10, pady=10, sticky="w")
 
-    label = tk.Label(label_frame, text="Modo de verificação")
-    label.grid(row=0, column=0, padx=6, pady=6)
+    '''label = tk.Label(label_frame, text="Modo de verificação")
+    label.grid(row=0, column=0, padx=6, pady=6)'''
 
     global checkbox1
     checkbox1 = tk.Checkbutton(label_frame,
                                text="Marcar",
                                variable=checkbox1_state,
                                command=check_one_checked)
-    checkbox1.grid(row=0, column=1, padx=5, pady=5)
+    # checkbox1.grid(row=0, column=1, padx=5, pady=5)
 
     label = tk.Label(label_frame, text="Modo constante")
     label.grid(row=1, column=0, padx=6, pady=6)
