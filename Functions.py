@@ -42,12 +42,12 @@ def on_new_process_created(process):
 
 def verificar_instancia_processo(process):
     checks = {
-        "ReadOperationCount": (int(process.ReadOperationCount), 150),
+        "ReadOperationCount": (int(process.ReadOperationCount), 30),
         "WriteOperationCount": (int(process.WriteOperationCount), 300),
         "PageFaults": (process.PageFaults, 1000),
-        "ThreadCount": (process.ThreadCount, 30),
-        "HandleCount": (process.HandleCount, 200),
-        "KernelModeTime": (process.KernelModeTime, "00:03:25")
+        "ThreadCount": (process.ThreadCount, 8),
+        "HandleCount": (process.HandleCount, 120),
+        "KernelModeTime": (process.KernelModeTime, "00:04:25")
     }
 
     status_list = []
