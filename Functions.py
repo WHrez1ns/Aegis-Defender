@@ -4,6 +4,11 @@ import psutil
 import wmi
 from Process import Process
 from sklearn import tree
+import ctypes
+
+# Constantes da API do Windows
+PROCESS_ALL_ACCESS = 0x1F0FFF
+MEM_RELEASE = 0x8000
 
 
 def check_one_checked():
@@ -45,9 +50,9 @@ def verificar_instancia_processo(process):
         "ReadOperationCount": (int(process.ReadOperationCount), 30),
         "WriteOperationCount": (int(process.WriteOperationCount), 300),
         "PageFaults": (process.PageFaults, 1000),
-        "ThreadCount": (process.ThreadCount, 8),
-        "HandleCount": (process.HandleCount, 120),
-        "KernelModeTime": (process.KernelModeTime, "00:04:25")
+        "ThreadCount": (process.ThreadCount, 3),
+        "HandleCount": (process.HandleCount, 60),
+        "KernelModeTime": (process.KernelModeTime, "00:03:25")
     }
 
     status_list = []
@@ -144,25 +149,61 @@ def start_exe():
 def main():
     global features
     features = [
+        # 20 features
         [0, 0, 0, 0, 0, 0],  # status id = 0
-        [1, 0, 0, 1, 0, 0],  # status id = 0
-        [0, 0, 0, 0, 1, 1],  # status id = 0
+        [1, 0, 0, 0, 0, 0],  # status id = 0
         [1, 1, 0, 0, 0, 0],  # status id = 0
-        [0, 0, 1, 1, 0, 0],  # status id = 0
+        [1, 1, 1, 0, 0, 0],  # status id = 0
+        [0, 0, 0, 1, 0, 0],  # status id = 0
+        [0, 0, 0, 1, 1, 0],  # status id = 0
+        [0, 0, 0, 1, 1, 1],  # status id = 0
         [1, 0, 1, 0, 0, 0],  # status id = 0
+        [1, 0, 1, 1, 0, 0],  # status id = 0
+        [0, 1, 0, 1, 0, 0],  # status id = 0
+        [0, 1, 0, 1, 1, 0],  # status id = 0
+        [0, 0, 1, 0, 1, 0],  # status id = 0
+        [0, 0, 1, 0, 1, 1],  # status id = 0
         [0, 1, 0, 1, 0, 1],  # status id = 0
-        [0, 1, 1, 1, 0, 1],  # status id = 1
+        [1, 0, 1, 0, 1, 0],  # status id = 0
+        [1, 1, 0, 1, 0, 0],  # status id = 0
+        [1, 1, 0, 0, 1, 0],  # status id = 0
+        [1, 1, 0, 0, 0, 1],  # status id = 0
+        [0, 1, 1, 0, 0, 1],  # status id = 0
+        [0, 0, 1, 1, 0, 1],  # status id = 0
+
+        # 16 features
         [1, 1, 1, 1, 0, 0],  # status id = 1
+        [0, 1, 1, 1, 1, 0],  # status id = 1
         [0, 0, 1, 1, 1, 1],  # status id = 1
-        [1, 1, 0, 1, 0, 1],  # status id = 1
-        [1, 1, 1, 1, 0, 1],  # status id = 1
-        [1, 1, 1, 1, 1, 0],  # status id = 1
+        [1, 0, 1, 1, 1, 0],  # status id = 1
+        [1, 0, 0, 1, 1, 1],  # status id = 1
+        [1, 1, 0, 1, 1, 0],  # status id = 1
+        [1, 1, 0, 0, 1, 1],  # status id = 1
+        [0, 1, 1, 1, 1, 0],  # status id = 1
+        [0, 1, 1, 0, 1, 1],  # status id = 1
+        [0, 1, 0, 1, 1, 1],  # status id = 1
+        [0, 1, 1, 1, 1, 1],  # status id = 1
+        [1, 0, 1, 1, 1, 1],  # status id = 1
         [1, 1, 0, 1, 1, 1],  # status id = 1
+        [1, 1, 1, 0, 1, 1],  # status id = 1
+        [1, 1, 1, 1, 0, 1],  # status id = 1
+        [1, 0, 0, 1, 1, 0],  # status id = 1
+
+        # 1 feature
         [1, 1, 1, 1, 1, 1],  # status id = 2
     ]
 
     global labels
-    labels = [0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 2]
+    labels = [
+        # 20 labels
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+
+        # 16 labels
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+
+         # 1 label
+        2
+    ]
 
     global classif
     classif = tree.DecisionTreeClassifier()
