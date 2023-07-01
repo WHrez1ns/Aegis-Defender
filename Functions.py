@@ -31,6 +31,10 @@ def show_help():
     messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo de verificação: este modo é responsável por analisar o próximo processo que for executado na máquina e determinar se ele é um possível malware.\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis malwares.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
 
 
+def show_exit():
+    exit()
+
+
 def on_new_process_created(process):
     print(f"\033[38m===================================================")
     print(f"\033[35m| Novo processo encontrado: {process.Name}")
@@ -38,10 +42,10 @@ def on_new_process_created(process):
 
 def verificar_instancia_processo(process):
     checks = {
-        "ReadOperationCount": (int(process.ReadOperationCount), 5000),
-        "WriteOperationCount": (int(process.WriteOperationCount), 1000),
+        "ReadOperationCount": (int(process.ReadOperationCount), 150),
+        "WriteOperationCount": (int(process.WriteOperationCount), 300),
         "PageFaults": (process.PageFaults, 1000),
-        "ThreadCount": (process.ThreadCount, 100),
+        "ThreadCount": (process.ThreadCount, 30),
         "HandleCount": (process.HandleCount, 200),
         "KernelModeTime": (process.KernelModeTime, "00:03:25")
     }
@@ -50,11 +54,14 @@ def verificar_instancia_processo(process):
 
     try:
         processid = psutil.Process(process.ProcessId)
+
+        # verifica instancia
         for key, (value, threshold) in checks.items():
             if value > threshold:
                 print(f"\033[33m| [SUSPEITO] {key} > {threshold}: {value}")
                 status_list.append(1)
             else:
+                print(f"\033[33m| [SEGURO] {key} < {threshold}: {value}")
                 status_list.append(0)
         print(f"\033[34m| [VERIFICAÇÃO] Status list: {status_list}")
         status_id = classif.predict([status_list])
@@ -69,6 +76,9 @@ def verificar_instancia_processo(process):
                 processid.terminate()
                 print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
             else:
+                new_process = Process(
+                    process.Name, process.ProcessId)
+                processos_lista.append(new_process)
                 print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
         else:
             processid.terminate()
@@ -91,7 +101,6 @@ def analyse(process):
             return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido")
     print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
     verificar_instancia_processo(process)
-
 
 def verify_mode():
     print("\033[36m| Modo de verificação: LIGADO")
@@ -164,14 +173,14 @@ def main():
     mapping_processes()
 
     root = tk.Tk()
-    icon = "img/aegis.ico"
-    root.iconbitmap(icon)
+    # icon = "aegis.ico"
+    # root.iconbitmap(icon)
     root.title("Aegis Defender")
     root.geometry("400x200")
     menubar = tk.Menu(root)
     menu_principal = tk.Menu(menubar, tearoff=0)
     menu_principal.add_command(label="Ajuda", command=show_help)
-    menu_principal.add_command(label="Sair", command=exit)
+    menu_principal.add_command(label="Sair", command=show_exit)
     menubar.add_cascade(label="Configurações", menu=menu_principal)
     root.config(menu=menubar)
 
