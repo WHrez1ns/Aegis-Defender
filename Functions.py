@@ -58,7 +58,7 @@ def verificar_instancia_processo(process):
         # verifica instancia
         for key, (value, threshold) in checks.items():
             if value >= threshold:
-                print(f"\033[33m| [SUSPEITO] {key} > {threshold}: {value}")
+                print(f"\033[33m| [SUSPEITO] {key} >= {threshold}: {value}")
                 status_list.append(1)
             else:
                 print(f"\033[33m| [SEGURO] {key} < {threshold}: {value}")
@@ -82,7 +82,7 @@ def verificar_instancia_processo(process):
                 print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
         else:
             processid.terminate()
-            print(f"\033[31m| [PERIGOSO] Status id: 2 | {process.Name}")
+            print(f"\033[31m| [PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
     except psutil.NoSuchProcess:
         print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
     except psutil.AccessDenied:
@@ -103,7 +103,7 @@ def analyse(process):
     verificar_instancia_processo(process)
 
 def verify_mode():
-    print("\033[36m| Modo de verificação: LIGADO")
+    print("\033[36m| [AVISO] Modo de verificação: LIGADO")
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
@@ -112,13 +112,13 @@ def verify_mode():
             on_new_process_created(process)
             analyse(process)
             checkbox1.deselect()
-            print("\033[31m| Modo de verificação: DESLIGADO")
+            print("\033[31m| [AVISO] Modo de verificação: DESLIGADO")
     except Exception as e:
         messagebox.showerror("Erro", f"Erro: {e}")
 
 
 def constant_mode():
-    print("\033[36m| Modo constante: LIGADO")
+    print("\033[36m| [AVISO] Modo constante: LIGADO")
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
@@ -144,29 +144,29 @@ def start_exe():
 def main():
     global features
     features = [
-        # 20 features
-        [0, 0, 0, 0, 0, 0],  # status id = 0
-        [1, 0, 0, 0, 0, 0],  # status id = 0
-        [1, 1, 0, 0, 0, 0],  # status id = 0
-        [1, 1, 1, 0, 0, 0],  # status id = 0
-        [0, 0, 0, 1, 0, 0],  # status id = 0
-        [0, 0, 0, 1, 1, 0],  # status id = 0
-        [0, 0, 0, 1, 1, 1],  # status id = 0
-        [1, 0, 1, 0, 0, 0],  # status id = 0
-        [1, 0, 1, 1, 0, 0],  # status id = 0
-        [0, 1, 0, 1, 0, 0],  # status id = 0
-        [0, 1, 0, 1, 1, 0],  # status id = 0
-        [0, 0, 1, 0, 1, 0],  # status id = 0
-        [0, 0, 1, 0, 1, 1],  # status id = 0
-        [0, 1, 0, 1, 0, 1],  # status id = 0
-        [1, 0, 1, 0, 1, 0],  # status id = 0
-        [1, 1, 0, 1, 0, 0],  # status id = 0
-        [1, 1, 0, 0, 1, 0],  # status id = 0
-        [1, 1, 0, 0, 0, 1],  # status id = 0
-        [0, 1, 1, 0, 0, 1],  # status id = 0
-        [0, 0, 1, 1, 0, 1],  # status id = 0
+        # Status List = 0 -> 20 features
+        [0, 0, 0, 0, 0, 0],
+        [1, 0, 0, 0, 0, 0],
+        [1, 1, 0, 0, 0, 0],
+        [1, 1, 1, 0, 0, 0],
+        [0, 0, 0, 1, 0, 0],
+        [0, 0, 0, 1, 1, 0],
+        [0, 0, 0, 1, 1, 1],
+        [1, 0, 1, 0, 0, 0],
+        [1, 0, 1, 1, 0, 0],
+        [0, 1, 0, 1, 0, 0],
+        [0, 1, 0, 1, 1, 0],
+        [0, 0, 1, 0, 1, 0],
+        [0, 0, 1, 0, 1, 1],
+        [0, 1, 0, 1, 0, 1],
+        [1, 0, 1, 0, 1, 0],
+        [1, 1, 0, 1, 0, 0],
+        [1, 1, 0, 0, 1, 0],
+        [1, 1, 0, 0, 0, 1],
+        [0, 1, 1, 0, 0, 1],
+        [0, 0, 1, 1, 0, 1],
 
-        # 15 features
+        # Status List = 1 -> 15 features
         [1, 1, 1, 1, 0, 0],  # status id = 1
         [0, 1, 1, 1, 1, 0],  # status id = 1
         [0, 0, 1, 1, 1, 1],  # status id = 1
@@ -183,20 +183,20 @@ def main():
         [1, 1, 1, 1, 0, 1],  # status id = 1
         [1, 0, 0, 1, 1, 0],  # status id = 1
 
-        # 2 feature
+        # Status List = 2 -> 2 feature
         [0, 1, 1, 1, 1, 1],  # status id = 2
         [1, 1, 1, 1, 1, 1],  # status id = 2
     ]
 
     global labels
     labels = [
-        # 20 labels
+        # Status ID = 0 -> 20 labels
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
-        # 15 labels
+        # Status ID = 1 -> 15 labels
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
-        # 2 label
+        # Status ID = 2 -> 2 labels
         2, 2
     ]
 

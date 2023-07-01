@@ -3,6 +3,7 @@ import os
 import ctypes
 import sys
 
+
 current_file = os.path.abspath(__file__)
 
 if not ctypes.windll.shell32.IsUserAnAdmin():
