@@ -4,11 +4,6 @@ import psutil
 import wmi
 from Process import Process
 from sklearn import tree
-import ctypes
-
-# Constantes da API do Windows
-PROCESS_ALL_ACCESS = 0x1F0FFF
-MEM_RELEASE = 0x8000
 
 
 def check_one_checked():
