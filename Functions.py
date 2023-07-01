@@ -57,7 +57,7 @@ def verificar_instancia_processo(process):
 
         # verifica instancia
         for key, (value, threshold) in checks.items():
-            if value > threshold:
+            if value >= threshold:
                 print(f"\033[33m| [SUSPEITO] {key} > {threshold}: {value}")
                 status_list.append(1)
             else:
@@ -166,7 +166,7 @@ def main():
         [0, 1, 1, 0, 0, 1],  # status id = 0
         [0, 0, 1, 1, 0, 1],  # status id = 0
 
-        # 16 features
+        # 15 features
         [1, 1, 1, 1, 0, 0],  # status id = 1
         [0, 1, 1, 1, 1, 0],  # status id = 1
         [0, 0, 1, 1, 1, 1],  # status id = 1
@@ -177,14 +177,14 @@ def main():
         [0, 1, 1, 1, 1, 0],  # status id = 1
         [0, 1, 1, 0, 1, 1],  # status id = 1
         [0, 1, 0, 1, 1, 1],  # status id = 1
-        [0, 1, 1, 1, 1, 1],  # status id = 1
         [1, 0, 1, 1, 1, 1],  # status id = 1
         [1, 1, 0, 1, 1, 1],  # status id = 1
         [1, 1, 1, 0, 1, 1],  # status id = 1
         [1, 1, 1, 1, 0, 1],  # status id = 1
         [1, 0, 0, 1, 1, 0],  # status id = 1
 
-        # 1 feature
+        # 2 feature
+        [0, 1, 1, 1, 1, 1],  # status id = 2
         [1, 1, 1, 1, 1, 1],  # status id = 2
     ]
 
@@ -193,11 +193,11 @@ def main():
         # 20 labels
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
-        # 16 labels
-        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
+        # 15 labels
+        1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
-         # 1 label
-        2
+        # 2 label
+        2, 2
     ]
 
     global classif
