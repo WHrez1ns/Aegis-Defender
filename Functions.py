@@ -4,6 +4,7 @@ import psutil
 import wmi
 from Process import Process
 from sklearn import tree
+import xml.etree.ElementTree as ET
 
 
 def check_one_checked():
@@ -16,15 +17,15 @@ def check_two_checked():
         checkbox1.deselect()
 
 
-def mapping_processes():
-    processos = psutil.process_iter()
-    for processo in processos:
-        try:
-            new_process = Process(
-                processo.name(), processo.pid)
-            processos_lista.append(new_process)
-        except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-            pass
+# def mapping_processes():
+#     processos = psutil.process_iter()
+#     for processo in processos:
+#         try:
+#             new_process = Process(
+#                 processo.name(), processo.pid)
+#             processos_lista.append(new_process)
+#         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
+#             pass
 
 
 def show_help():
@@ -33,6 +34,14 @@ def show_help():
 
 def show_exit():
     exit()
+
+
+def save_record_in_xml(process_name, sid):
+    proc = ET.Element("processo")
+    proc.text = process_name
+    proc.set('sid', str(sid))
+    xmlroot.append(proc)
+    xmltree.write('process.xml')
 
 
 def on_new_process_created(process):
@@ -66,23 +75,26 @@ def verificar_instancia_processo(process):
         print(f"\033[34m| [VERIFICAÇÃO] Status list: {status_list}")
         status_id = classif.predict([status_list])
         if status_id == 0:
-            new_process = Process(
-                process.Name, process.ProcessId)
-            processos_lista.append(new_process)
+            # new_process = Process(
+            #     process.Name, process.ProcessId)
+            # processos_lista.append(new_process)
             print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
+            save_record_in_xml(process.Name, 0)
         elif status_id == 1:
             resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui um comportamento suspeito e pode danificar seu computador. Deseja encerrá-lo? No caso do programa ser desconhecido, recomenda-se o encerramento do mesmo.")
             if resposta == "sim" or resposta == "yes":
                 processid.terminate()
                 print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
             else:
-                new_process = Process(
-                    process.Name, process.ProcessId)
-                processos_lista.append(new_process)
+                # new_process = Process(
+                #      process.Name, process.ProcessId)
+                # processos_lista.append(new_process)
                 print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
+                save_record_in_xml(process.Name, 0)
         else:
             processid.terminate()
             print(f"\033[31m| [PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
+            save_record_in_xml(process.Name, 2)
     except psutil.NoSuchProcess:
         print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
     except psutil.AccessDenied:
@@ -96,9 +108,12 @@ def verificar_instancia_processo(process):
 
 
 def analyse(process):
-    for objeto in processos_lista:
-        if objeto.nome == process.Name:
-            return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido")
+    for processo in xmlroot.iter('processo'):
+        if processo.text == process.Name and processo.attrib['sid'] == '0':
+            return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido (já analisado pelo sistema)")
+    # for objeto in processos_lista:
+    #     if objeto.nome == process.Name:
+    #         return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido")
     print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
     verificar_instancia_processo(process)
 
@@ -165,6 +180,8 @@ def main():
         [1, 1, 0, 0, 0, 1],
         [0, 1, 1, 0, 0, 1],
         [0, 0, 1, 1, 0, 1],
+        [0, 0, 1, 1, 1, 0],
+        [0, 1, 1, 1, 0, 0],
 
         # Status List = 1 -> 15 features
         [1, 1, 1, 1, 0, 0],  # status id = 1
@@ -191,7 +208,7 @@ def main():
     global labels
     labels = [
         # Status ID = 0 -> 20 labels
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
+        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
         # Status ID = 1 -> 15 labels
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
@@ -204,9 +221,13 @@ def main():
     classif = tree.DecisionTreeClassifier()
     classif.fit(features, labels)
 
-    global processos_lista
-    processos_lista = []
-    mapping_processes()
+    # global processos_lista
+    # processos_lista = []
+    # mapping_processes()
+
+    global xmltree, xmlroot
+    xmltree = ET.parse('process.xml')
+    xmlroot = xmltree.getroot()
 
     root = tk.Tk()
     # icon = "aegis.ico"
