@@ -2,19 +2,19 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import psutil
 import wmi
-from Process import Process
+# from Process import Process
 from sklearn import tree
 import xml.etree.ElementTree as ET
 
 
-def check_one_checked():
-    if checkbox1_state.get() == 1:
-        checkbox2.deselect()
+# def check_one_checked():
+#     if checkbox1_state.get() == 1:
+#         checkbox2.deselect()
 
 
-def check_two_checked():
-    if checkbox2_state.get() == 1:
-        checkbox1.deselect()
+# def check_two_checked():
+#     if checkbox2_state.get() == 1:
+#         checkbox1.deselect()
 
 
 # def mapping_processes():
@@ -29,7 +29,7 @@ def check_two_checked():
 
 
 def show_help():
-    messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo de verificação: este modo é responsável por analisar o próximo processo que for executado na máquina e determinar se ele é um possível malware.\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis malwares.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
+    messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis ameaças.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
 
 
 def show_exit():
@@ -117,19 +117,19 @@ def analyse(process):
     print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
     verificar_instancia_processo(process)
 
-def verify_mode():
-    print("\033[36m| [AVISO] Modo de verificação: LIGADO")
-    try:
-        wmi_service = wmi.WMI()
-        watcher = wmi_service.Win32_Process.watch_for("creation")
-        while checkbox1_state.get() == 1:
-            process = watcher()
-            on_new_process_created(process)
-            analyse(process)
-            checkbox1.deselect()
-            print("\033[31m| [AVISO] Modo de verificação: DESLIGADO")
-    except Exception as e:
-        messagebox.showerror("Erro", f"Erro: {e}")
+# def verify_mode():
+#     print("\033[36m| [AVISO] Modo de verificação: LIGADO")
+#     try:
+#         wmi_service = wmi.WMI()
+#         watcher = wmi_service.Win32_Process.watch_for("creation")
+#         while checkbox1_state.get() == 1:
+#             process = watcher()
+#             on_new_process_created(process)
+#             analyse(process)
+#             checkbox1.deselect()
+#             print("\033[31m| [AVISO] Modo de verificação: DESLIGADO")
+#     except Exception as e:
+#         messagebox.showerror("Erro", f"Erro: {e}")
 
 
 def constant_mode():
@@ -137,7 +137,7 @@ def constant_mode():
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
-        while checkbox2_state.get() == 1:
+        while checkbox_state.get() == 1:
             process = watcher()
             on_new_process_created(process)
             analyse(process)
@@ -146,12 +146,9 @@ def constant_mode():
 
 
 def start_exe():
-    if checkbox1_state.get() == checkbox2_state.get():
+    if checkbox_state.get() == 0:
         messagebox.showwarning(
             "Aviso", "Selecione um modo de execução para iniciar")
-        return
-    if checkbox1_state.get() == 1:
-        verify_mode()
     else:
         constant_mode()
 
@@ -160,49 +157,13 @@ def main():
     global features
     features = [
         # Status List = 0 -> 20 features
-        [0, 0, 0, 0, 0, 0],
-        [1, 0, 0, 0, 0, 0],
-        [1, 1, 0, 0, 0, 0],
-        [1, 1, 1, 0, 0, 0],
-        [0, 0, 0, 1, 0, 0],
-        [0, 0, 0, 1, 1, 0],
-        [0, 0, 0, 1, 1, 1],
-        [1, 0, 1, 0, 0, 0],
-        [1, 0, 1, 1, 0, 0],
-        [0, 1, 0, 1, 0, 0],
-        [0, 1, 0, 1, 1, 0],
-        [0, 0, 1, 0, 1, 0],
-        [0, 0, 1, 0, 1, 1],
-        [0, 1, 0, 1, 0, 1],
-        [1, 0, 1, 0, 1, 0],
-        [1, 1, 0, 1, 0, 0],
-        [1, 1, 0, 0, 1, 0],
-        [1, 1, 0, 0, 0, 1],
-        [0, 1, 1, 0, 0, 1],
-        [0, 0, 1, 1, 0, 1],
-        [0, 0, 1, 1, 1, 0],
-        [0, 1, 1, 1, 0, 0],
+        [0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 1], [1, 0, 1, 0, 0, 0], [1, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 0, 1, 0], [0, 0, 1, 0, 1, 1], [0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0], [1, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 0], [0, 1, 1, 1, 0, 0],
 
         # Status List = 1 -> 15 features
-        [1, 1, 1, 1, 0, 0],  # status id = 1
-        [0, 1, 1, 1, 1, 0],  # status id = 1
-        [0, 0, 1, 1, 1, 1],  # status id = 1
-        [1, 0, 1, 1, 1, 0],  # status id = 1
-        [1, 0, 0, 1, 1, 1],  # status id = 1
-        [1, 1, 0, 1, 1, 0],  # status id = 1
-        [1, 1, 0, 0, 1, 1],  # status id = 1
-        [0, 1, 1, 1, 1, 0],  # status id = 1
-        [0, 1, 1, 0, 1, 1],  # status id = 1
-        [0, 1, 0, 1, 1, 1],  # status id = 1
-        [1, 0, 1, 1, 1, 1],  # status id = 1
-        [1, 1, 0, 1, 1, 1],  # status id = 1
-        [1, 1, 1, 0, 1, 1],  # status id = 1
-        [1, 1, 1, 1, 0, 1],  # status id = 1
-        [1, 0, 0, 1, 1, 0],  # status id = 1
+        [1, 1, 1, 1, 0, 0], [0, 1, 1, 1, 1, 0], [0, 0, 1, 1, 1, 1], [1, 0, 1, 1, 1, 0], [1, 0, 0, 1, 1, 1], [1, 1, 0, 1, 1, 0], [1, 1, 0, 0, 1, 1], [0, 1, 1, 1, 1, 0], [0, 1, 1, 0, 1, 1], [0, 1, 0, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1], [1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1], [1, 0, 0, 1, 1, 0], 
 
         # Status List = 2 -> 2 feature
-        [0, 1, 1, 1, 1, 1],  # status id = 2
-        [1, 1, 1, 1, 1, 1],  # status id = 2
+        [0, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], 
     ]
 
     global labels
@@ -230,10 +191,13 @@ def main():
     xmlroot = xmltree.getroot()
 
     root = tk.Tk()
-    # icon = "aegis.ico"
-    # root.iconbitmap(icon)
+    icon = "aegis.ico"
+    root.iconbitmap(icon)
     root.title("Aegis Defender")
-    root.geometry("400x200")
+    root.configure(bg="#1f1f1f")
+    root.resizable(width=False, height=False)
+    # root.geometry("400x200")
+
     menubar = tk.Menu(root)
     menu_principal = tk.Menu(menubar, tearoff=0)
     menu_principal.add_command(label="Ajuda", command=show_help)
@@ -241,37 +205,55 @@ def main():
     menubar.add_cascade(label="Configurações", menu=menu_principal)
     root.config(menu=menubar)
 
-    global checkbox1_state
-    checkbox1_state = tk.BooleanVar()
-    global checkbox2_state
-    checkbox2_state = tk.BooleanVar()
+    # global checkbox1_state
+    # checkbox1_state = tk.BooleanVar()
+    global checkbox_state
+    checkbox_state = tk.BooleanVar()
 
-    label_frame = tk.LabelFrame(
-        root, text="Modos de execução:", font=("Arial", 12))
-    label_frame.grid(row=1, column=0, padx=10, pady=10, sticky="w")
+    label_frame = tk.LabelFrame(root, 
+                                text="Modos de execução:", 
+                                font=("Arial", 10, "bold"), 
+                                background="#1f1f1f", 
+                                foreground="#ffffff")
+    label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="w")
 
-    '''label = tk.Label(label_frame, text="Modo de verificação")
-    label.grid(row=0, column=0, padx=6, pady=6)'''
+    # label = tk.Label(label_frame, text="Modo de verificação")
+    # label.grid(row=0, column=0, padx=6, pady=6)
 
-    global checkbox1
-    checkbox1 = tk.Checkbutton(label_frame,
-                               text="Marcar",
-                               variable=checkbox1_state,
-                               command=check_one_checked)
+    # global checkbox1
+    # checkbox1 = tk.Checkbutton(label_frame,
+    #                            text="Marcar",
+    #                            variable=checkbox1_state,
+    #                            command=check_one_checked)
     # checkbox1.grid(row=0, column=1, padx=5, pady=5)
 
-    label = tk.Label(label_frame, text="Modo constante")
+    label = tk.Label(label_frame, 
+                     text="Modo constante", 
+                     background="#1f1f1f", 
+                     foreground="#ffffff")
     label.grid(row=1, column=0, padx=6, pady=6)
 
-    global checkbox2
-    checkbox2 = tk.Checkbutton(label_frame,
-                               text="Marcar",
-                               variable=checkbox2_state,
-                               command=check_two_checked)
-    checkbox2.grid(row=1, column=1, padx=5, pady=5)
+    global checkbox
+    checkbox = tk.Checkbutton(label_frame,
+                              text="Marcar",
+                              cursor="hand2",
+                              font=("Arial", 8, "bold"),
+                              background="#1f1f1f",
+                              foreground="#ac00c7",
+                              variable=checkbox_state)
+    checkbox.grid(row=1, column=1, padx=5, pady=5)
 
-    button = ttk.Button(
-        root, text="Iniciar execução", command=start_exe)
-    button.grid(row=2, column=0, padx=10, pady=10)
+    button_frame = tk.Frame(root, background="#1f1f1f")
+    button_frame.grid(row=2, column=0, padx=10, pady=10)
+
+    button = tk.Button(button_frame, 
+                       text="Iniciar execução", 
+                       cursor="hand2",
+                       relief="flat",
+                       background="#ac00c7",
+                       foreground="#1f1f1f",
+                       font=("Helvetica", 10, "bold"), 
+                       command=start_exe)
+    button.grid()
 
     root.mainloop()
