@@ -1,0 +1,72 @@
+[
+    {
+        "name": "cmd.exe",
+        "index": 0,
+        "sid": 0
+    },
+    {
+        "name": "opera.exe",
+        "index": 1,
+        "sid": 0
+    },
+    {
+        "name": "notepad.exe",
+        "index": 2,
+        "sid": 0
+    },
+    {
+        "name": "bash.exe",
+        "index": 3,
+        "sid": 0
+    },
+    {
+        "name": "steam.exe",
+        "index": 4,
+        "sid": 0
+    },
+    {
+        "name": "git-bash.exe",
+        "index": 5,
+        "sid": 0
+    },
+    {
+        "name": "mintty.exe",
+        "index": 6,
+        "sid": 0
+    },
+    {
+        "name": "conhost.exe",
+        "index": 7,
+        "sid": 0
+    },
+    {
+        "name": "smartscreen.exe",
+        "index": 8,
+        "sid": 0
+    },
+    {
+        "name": "ScreenClippingHost.exe",
+        "index": 9,
+        "sid": 0
+    },
+    {
+        "name": "svchost.exe",
+        "index": 10,
+        "sid": 0
+    },
+    {
+        "name": "backgroundTaskHost.exe",
+        "index": 11,
+        "sid": 0
+    },
+    {
+        "name": "RuntimeBroker.exe",
+        "index": 12,
+        "sid": 0
+    },
+    {
+        "name": "Figma.exe",
+        "index": 13,
+        "sid": 0
+    }
+]

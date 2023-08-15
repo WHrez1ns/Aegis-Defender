@@ -4,28 +4,8 @@ import psutil
 import wmi
 # from Process import Process
 from sklearn import tree
-import xml.etree.ElementTree as ET
-
-
-# def check_one_checked():
-#     if checkbox1_state.get() == 1:
-#         checkbox2.deselect()
-
-
-# def check_two_checked():
-#     if checkbox2_state.get() == 1:
-#         checkbox1.deselect()
-
-
-# def mapping_processes():
-#     processos = psutil.process_iter()
-#     for processo in processos:
-#         try:
-#             new_process = Process(
-#                 processo.name(), processo.pid)
-#             processos_lista.append(new_process)
-#         except (psutil.NoSuchProcess, psutil.AccessDenied, psutil.ZombieProcess):
-#             pass
+# import xml.etree.ElementTree as ET
+import json
 
 
 def show_help():
@@ -36,12 +16,21 @@ def show_exit():
     exit()
 
 
-def save_record_in_xml(process_name, sid):
-    proc = ET.Element("processo")
-    proc.text = process_name
-    proc.set('sid', str(sid))
-    xmlroot.append(proc)
-    xmltree.write('process.xml')
+def new_item_in_json(json_file, name, sid):
+    with open(json_file, 'r') as file:
+        data = json.load(file)
+        index = len(data)
+
+    new_item = {
+        "name":name,
+        "index":index,
+        "sid":sid
+    }
+
+    data.append(new_item)
+
+    with open(json_file, 'w') as file:
+        json.dump(data, file, indent=4)
 
 
 def on_new_process_created(process):
@@ -75,26 +64,20 @@ def verificar_instancia_processo(process):
         print(f"\033[34m| [VERIFICAÇÃO] Status list: {status_list}")
         status_id = classif.predict([status_list])
         if status_id == 0:
-            # new_process = Process(
-            #     process.Name, process.ProcessId)
-            # processos_lista.append(new_process)
             print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
-            save_record_in_xml(process.Name, 0)
+            new_item_in_json("process.json", process.Name, 0)
         elif status_id == 1:
             resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui um comportamento suspeito e pode danificar seu computador. Deseja encerrá-lo? No caso do programa ser desconhecido, recomenda-se o encerramento do mesmo.")
             if resposta == "sim" or resposta == "yes":
                 processid.terminate()
                 print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
             else:
-                # new_process = Process(
-                #      process.Name, process.ProcessId)
-                # processos_lista.append(new_process)
                 print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
-                save_record_in_xml(process.Name, 0)
+                new_item_in_json("process.json", process.Name, 0)
         else:
             processid.terminate()
             print(f"\033[31m| [PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
-            save_record_in_xml(process.Name, 2)
+            new_item_in_json("process.json", process.Name, 2)
     except psutil.NoSuchProcess:
         print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
     except psutil.AccessDenied:
@@ -108,29 +91,13 @@ def verificar_instancia_processo(process):
 
 
 def analyse(process):
-    for processo in xmlroot.iter('processo'):
-        if processo.text == process.Name and processo.attrib['sid'] == '0':
-            return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido (já analisado pelo sistema)")
-    # for objeto in processos_lista:
-    #     if objeto.nome == process.Name:
-    #         return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido")
+    with open("process.json", 'r') as file:
+        data = json.load(file)
+        for dictionary in data:
+            if dictionary["name"] == process.Name and dictionary["sid"] == 0:
+                return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido (já analisado pelo sistema)")
     print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
     verificar_instancia_processo(process)
-
-# def verify_mode():
-#     print("\033[36m| [AVISO] Modo de verificação: LIGADO")
-#     try:
-#         wmi_service = wmi.WMI()
-#         watcher = wmi_service.Win32_Process.watch_for("creation")
-#         while checkbox1_state.get() == 1:
-#             process = watcher()
-#             on_new_process_created(process)
-#             analyse(process)
-#             checkbox1.deselect()
-#             print("\033[31m| [AVISO] Modo de verificação: DESLIGADO")
-#     except Exception as e:
-#         messagebox.showerror("Erro", f"Erro: {e}")
-
 
 def constant_mode():
     print("\033[36m| [AVISO] Modo constante: LIGADO")
@@ -182,21 +149,12 @@ def main():
     classif = tree.DecisionTreeClassifier()
     classif.fit(features, labels)
 
-    # global processos_lista
-    # processos_lista = []
-    # mapping_processes()
-
-    global xmltree, xmlroot
-    xmltree = ET.parse('process.xml')
-    xmlroot = xmltree.getroot()
-
     root = tk.Tk()
     icon = "aegis.ico"
     root.iconbitmap(icon)
     root.title("Aegis Defender")
     root.configure(bg="#1f1f1f")
     root.resizable(width=False, height=False)
-    # root.geometry("400x200")
 
     menubar = tk.Menu(root)
     menu_principal = tk.Menu(menubar, tearoff=0)
@@ -205,8 +163,6 @@ def main():
     menubar.add_cascade(label="Configurações", menu=menu_principal)
     root.config(menu=menubar)
 
-    # global checkbox1_state
-    # checkbox1_state = tk.BooleanVar()
     global checkbox_state
     checkbox_state = tk.BooleanVar()
 
@@ -216,16 +172,6 @@ def main():
                                 background="#1f1f1f", 
                                 foreground="#ffffff")
     label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="w")
-
-    # label = tk.Label(label_frame, text="Modo de verificação")
-    # label.grid(row=0, column=0, padx=6, pady=6)
-
-    # global checkbox1
-    # checkbox1 = tk.Checkbutton(label_frame,
-    #                            text="Marcar",
-    #                            variable=checkbox1_state,
-    #                            command=check_one_checked)
-    # checkbox1.grid(row=0, column=1, padx=5, pady=5)
 
     label = tk.Label(label_frame, 
                      text="Modo constante", 
