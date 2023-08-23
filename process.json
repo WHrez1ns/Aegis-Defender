@@ -112,7 +112,7 @@
     {
         "name": "TiWorker.exe",
         "index": 22,
-        "sid": 2
+        "sid": 0
     },
     {
         "name": "TrustedInstaller.exe",
@@ -125,16 +125,6 @@
         "sid": 0
     },
     {
-        "name": "TiWorker.exe",
-        "index": 25,
-        "sid": 2
-    },
-    {
-        "name": "TiWorker.exe",
-        "index": 26,
-        "sid": 2
-    },
-    {
         "name": "taskhostw.exe",
         "index": 27,
         "sid": 0
@@ -142,6 +132,41 @@
     {
         "name": "MicrosoftEdgeUpdate.exe",
         "index": 28,
+        "sid": 0
+    },
+    {
+        "name": "Microsoft.Media.Player.exe",
+        "index": 29,
+        "sid": 0
+    },
+    {
+        "name": "git.exe",
+        "index": 30,
+        "sid": 0
+    },
+    {
+        "name": "opera_autoupdate.exe",
+        "index": 31,
+        "sid": 0
+    },
+    {
+        "name": "SearchProtocolHost.exe",
+        "index": 30,
+        "sid": 0
+    },
+    {
+        "name": "SearchFilterHost.exe",
+        "index": 31,
+        "sid": 0
+    },
+    {
+        "name": "BackgroundDownload.exe",
+        "index": 32,
+        "sid": 0
+    },
+    {
+        "name": "python.exe",
+        "index": 33,
         "sid": 0
     }
 ]
