@@ -68,5 +68,80 @@
         "name": "Figma.exe",
         "index": 13,
         "sid": 0
+    },
+    {
+        "name": "Code.exe",
+        "index": 14,
+        "sid": 0
+    },
+    {
+        "name": "HxTsr.exe",
+        "index": 15,
+        "sid": 0
+    },
+    {
+        "name": "FileCoAuth.exe",
+        "index": 16,
+        "sid": 0
+    },
+    {
+        "name": "PhoneExperienceHost.exe",
+        "index": 17,
+        "sid": 0
+    },
+    {
+        "name": "wermgr.exe",
+        "index": 18,
+        "sid": 0
+    },
+    {
+        "name": "MoUsoCoreWorker.exe",
+        "index": 19,
+        "sid": 0
+    },
+    {
+        "name": "sppsvc.exe",
+        "index": 20,
+        "sid": 0
+    },
+    {
+        "name": "git-remote-https.exe",
+        "index": 21,
+        "sid": 0
+    },
+    {
+        "name": "TiWorker.exe",
+        "index": 22,
+        "sid": 2
+    },
+    {
+        "name": "TrustedInstaller.exe",
+        "index": 23,
+        "sid": 0
+    },
+    {
+        "name": "OfficeC2RClient.exe",
+        "index": 24,
+        "sid": 0
+    },
+    {
+        "name": "TiWorker.exe",
+        "index": 25,
+        "sid": 2
+    },
+    {
+        "name": "TiWorker.exe",
+        "index": 26,
+        "sid": 2
+    },
+    {
+        "name": "taskhostw.exe",
+        "index": 27,
+        "sid": 0
+    },
+    {
+        "name": "MicrosoftEdgeUpdate.exe",
+        "index": 28,
+        "sid": 0
     }
 ]
