@@ -67,13 +67,16 @@ def verificar_instancia_processo(process):
             print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
             new_item_in_json("process.json", process.Name, 0)
         elif status_id == 1:
-            resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui um comportamento suspeito e pode danificar seu computador. Deseja encerrá-lo? No caso do programa ser desconhecido, recomenda-se o encerramento do mesmo.")
-            if resposta == "sim" or resposta == "yes":
-                processid.terminate()
-                print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
-            else:
-                print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
-                new_item_in_json("process.json", process.Name, 0)
+            # resposta = messagebox.askquestion("Alerta", f"O processo {process.Name} possui um comportamento suspeito e pode danificar seu computador. Deseja encerrá-lo? No caso do programa ser desconhecido, recomenda-se o encerramento do mesmo.")
+            # if resposta == "sim" or resposta == "yes":
+            #     processid.terminate()
+            #     print(f"\033[33m| [SUSPEITO] Status id: 1 | {process.Name}")
+            # else:
+            #     print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
+            #     new_item_in_json("process.json", process.Name, 0)
+            processid.terminate()
+            print(f"\033[31m| [SUSPEITO] Processo possui um comportamento suspeito: {process.Name} | Status id: 1")
+            new_item_in_json("process.json", process.Name, 2)
         else:
             processid.terminate()
             print(f"\033[31m| [PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
@@ -131,6 +134,9 @@ def main():
 
         # Status List = 2 -> 2 feature
         [0, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], 
+
+        # wannacry features
+        # [0, 0, 1, 1, 1, 1] | [0, 1, 1, 1, 1, 1] | [1, 1, 1, 1, 1, 1]
     ]
 
     global labels

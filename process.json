@@ -168,5 +168,65 @@
         "name": "python.exe",
         "index": 33,
         "sid": 0
+    },
+    {
+        "name": "SystemSettings.exe",
+        "index": 34,
+        "sid": 0
+    },
+    {
+        "name": "mscorsvw.exe",
+        "index": 35,
+        "sid": 0
+    },
+    {
+        "name": "WmiApSrv.exe",
+        "index": 36,
+        "sid": 0
+    },
+    {
+        "name": "DismHost.exe",
+        "index": 37,
+        "sid": 0
+    },
+    {
+        "name": "winserv.exe",
+        "index": 38,
+        "sid": 0
+    },
+    {
+        "name": "uhssvc.exe",
+        "index": 39,
+        "sid": 0
+    },
+    {
+        "name": "wuauclt.exe",
+        "index": 40,
+        "sid": 0
+    },
+    {
+        "name": "ngen.exe",
+        "index": 41,
+        "sid": 0
+    },
+    {
+        "name": "msiexec.exe",
+        "index": 42,
+        "sid": 0
+    },
+    {
+        "name": "ngentask.exe",
+        "index": 43,
+        "sid": 0
+    },
+    {
+        "name": "CHXSmartScreen.exe",
+        "index": 44,
+        "sid": 0
+    },
+    {
+        "name": "VSSVC.exe",
+        "index": 45,
+        "sid": 0
     }
 ]
