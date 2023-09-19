@@ -1,13 +1,15 @@
 import tkinter as tk
-from tkinter import ttk, messagebox
+from tkinter import messagebox
 import psutil
 import wmi
 from sklearn import tree
 import json
+import webview
+# import threading
 
 
 def show_help():
-    messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis ameaças.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
+        messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis ameaças.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
 
 
 def show_exit():
@@ -36,7 +38,7 @@ def on_new_process_created(process):
     print(f"\033[35m| Novo processo encontrado: {process.Name}")
 
 
-def verificar_instancia_processo(process):
+def instance_analysis(process):
     checks = {
         "ReadOperationCount": (int(process.ReadOperationCount), 30),
         "WriteOperationCount": (int(process.WriteOperationCount), 300),
@@ -51,7 +53,6 @@ def verificar_instancia_processo(process):
     try:
         processid = psutil.Process(process.ProcessId)
 
-        # verify instance
         for key, (value, threshold) in checks.items():
             if value >= threshold:
                 print(f"\033[33m| [SUSPEITO] {key} >= {threshold}: {value}")
@@ -91,7 +92,7 @@ def analyse(process):
             if dictionary["name"] == process.Name and dictionary["sid"] == 0:
                 return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido (já analisado pelo sistema)")
     print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
-    verificar_instancia_processo(process)
+    instance_analysis(process)
 
 
 def constant_mode():
@@ -99,16 +100,23 @@ def constant_mode():
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
-        while checkbox_state.get() == 1:
+        while checkbox_state == 1:
             process = watcher()
             on_new_process_created(process)
             analyse(process)
     except Exception as e:
         messagebox.showerror("Erro", f"Erro: {e}")
+    except KeyboardInterrupt:
+        print("\033[36m| [AVISO] Modo constante: Desligado\033[0m")
+
+
+def stop_constant_mode():
+    global checkbox_state
+    checkbox_state = 0
 
 
 def start_exe():
-    if checkbox_state.get() == 0:
+    if checkbox_state == 0:
         messagebox.showwarning(
             "Aviso", "Selecione um modo de execução para iniciar")
     else:
@@ -147,57 +155,23 @@ def main():
     classif = tree.DecisionTreeClassifier()
     classif.fit(features, labels)
 
-    root = tk.Tk()
-    icon = "aegis.ico"
-    root.iconbitmap(icon)
-    root.title("Aegis Defender")
-    root.configure(bg="#1f1f1f")
-    root.resizable(width=False, height=False)
-
-    menubar = tk.Menu(root)
-    menu_principal = tk.Menu(menubar, tearoff=0)
-    menu_principal.add_command(label="Ajuda", command=show_help)
-    menu_principal.add_command(label="Sair", command=show_exit)
-    menubar.add_cascade(label="Configurações", menu=menu_principal)
-    root.config(menu=menubar)
-
     global checkbox_state
-    checkbox_state = tk.BooleanVar()
 
-    label_frame = tk.LabelFrame(root, 
-                                text="Modos de execução:", 
-                                font=("Arial", 10, "bold"), 
-                                background="#1f1f1f", 
-                                foreground="#ffffff")
-    label_frame.grid(row=0, column=0, padx=10, pady=10, sticky="w")
+    while True:
+        print("----- Welcome to Aegis -----")
+        print("Select a type execution: ")
+        try:
+            resp = int(input(f"[1] Protect em real time\n[2] Exit\n: "))
+            if (resp == 1):
+                checkbox_state = 1
+                constant_mode()
+            elif (resp == 2):
+                break
+            else:
+                print("Invalid option")
+        except ValueError:
+            print("Invalid type")
 
-    label = tk.Label(label_frame, 
-                     text="Modo constante", 
-                     background="#1f1f1f", 
-                     foreground="#ffffff")
-    label.grid(row=1, column=0, padx=6, pady=6)
-
-    global checkbox
-    checkbox = tk.Checkbutton(label_frame,
-                              text="Marcar",
-                              cursor="hand2",
-                              font=("Arial", 8, "bold"),
-                              background="#1f1f1f",
-                              foreground="#ac00c7",
-                              variable=checkbox_state)
-    checkbox.grid(row=1, column=1, padx=5, pady=5)
-
-    button_frame = tk.Frame(root, background="#1f1f1f")
-    button_frame.grid(row=2, column=0, padx=10, pady=10)
-
-    button = tk.Button(button_frame, 
-                       text="Iniciar execução", 
-                       cursor="hand2",
-                       relief="flat",
-                       background="#ac00c7",
-                       foreground="#1f1f1f",
-                       font=("Helvetica", 10, "bold"), 
-                       command=start_exe)
-    button.grid()
-
-    root.mainloop()
+# def pywebview():
+#     webview.create_window("Aegis Defender", "http://127.0.0.1:5000/", width=1280, height=720, fullscreen=False, maximized=False, confirm_close=True)
+#     webview.start()

@@ -1,0 +1,237 @@
+[
+    {
+        "name": "cmd.exe",
+        "index": 0,
+        "sid": 0
+    },
+    {
+        "name": "opera.exe",
+        "index": 1,
+        "sid": 0
+    },
+    {
+        "name": "notepad.exe",
+        "index": 2,
+        "sid": 0
+    },
+    {
+        "name": "bash.exe",
+        "index": 3,
+        "sid": 0
+    },
+    {
+        "name": "steam.exe",
+        "index": 4,
+        "sid": 0
+    },
+    {
+        "name": "git-bash.exe",
+        "index": 5,
+        "sid": 0
+    },
+    {
+        "name": "mintty.exe",
+        "index": 6,
+        "sid": 0
+    },
+    {
+        "name": "conhost.exe",
+        "index": 7,
+        "sid": 0
+    },
+    {
+        "name": "smartscreen.exe",
+        "index": 8,
+        "sid": 0
+    },
+    {
+        "name": "ScreenClippingHost.exe",
+        "index": 9,
+        "sid": 0
+    },
+    {
+        "name": "svchost.exe",
+        "index": 10,
+        "sid": 0
+    },
+    {
+        "name": "backgroundTaskHost.exe",
+        "index": 11,
+        "sid": 0
+    },
+    {
+        "name": "RuntimeBroker.exe",
+        "index": 12,
+        "sid": 0
+    },
+    {
+        "name": "Figma.exe",
+        "index": 13,
+        "sid": 0
+    },
+    {
+        "name": "Code.exe",
+        "index": 14,
+        "sid": 0
+    },
+    {
+        "name": "HxTsr.exe",
+        "index": 15,
+        "sid": 0
+    },
+    {
+        "name": "FileCoAuth.exe",
+        "index": 16,
+        "sid": 0
+    },
+    {
+        "name": "PhoneExperienceHost.exe",
+        "index": 17,
+        "sid": 0
+    },
+    {
+        "name": "wermgr.exe",
+        "index": 18,
+        "sid": 0
+    },
+    {
+        "name": "MoUsoCoreWorker.exe",
+        "index": 19,
+        "sid": 0
+    },
+    {
+        "name": "sppsvc.exe",
+        "index": 20,
+        "sid": 0
+    },
+    {
+        "name": "git-remote-https.exe",
+        "index": 21,
+        "sid": 0
+    },
+    {
+        "name": "TiWorker.exe",
+        "index": 22,
+        "sid": 0
+    },
+    {
+        "name": "TrustedInstaller.exe",
+        "index": 23,
+        "sid": 0
+    },
+    {
+        "name": "OfficeC2RClient.exe",
+        "index": 24,
+        "sid": 0
+    },
+    {
+        "name": "taskhostw.exe",
+        "index": 27,
+        "sid": 0
+    },
+    {
+        "name": "MicrosoftEdgeUpdate.exe",
+        "index": 28,
+        "sid": 0
+    },
+    {
+        "name": "Microsoft.Media.Player.exe",
+        "index": 29,
+        "sid": 0
+    },
+    {
+        "name": "git.exe",
+        "index": 30,
+        "sid": 0
+    },
+    {
+        "name": "opera_autoupdate.exe",
+        "index": 31,
+        "sid": 0
+    },
+    {
+        "name": "SearchProtocolHost.exe",
+        "index": 30,
+        "sid": 0
+    },
+    {
+        "name": "SearchFilterHost.exe",
+        "index": 31,
+        "sid": 0
+    },
+    {
+        "name": "BackgroundDownload.exe",
+        "index": 32,
+        "sid": 0
+    },
+    {
+        "name": "python.exe",
+        "index": 33,
+        "sid": 0
+    },
+    {
+        "name": "SystemSettings.exe",
+        "index": 34,
+        "sid": 0
+    },
+    {
+        "name": "mscorsvw.exe",
+        "index": 35,
+        "sid": 0
+    },
+    {
+        "name": "WmiApSrv.exe",
+        "index": 36,
+        "sid": 0
+    },
+    {
+        "name": "DismHost.exe",
+        "index": 37,
+        "sid": 0
+    },
+    {
+        "name": "winserv.exe",
+        "index": 38,
+        "sid": 0
+    },
+    {
+        "name": "uhssvc.exe",
+        "index": 39,
+        "sid": 0
+    },
+    {
+        "name": "wuauclt.exe",
+        "index": 40,
+        "sid": 0
+    },
+    {
+        "name": "ngen.exe",
+        "index": 41,
+        "sid": 0
+    },
+    {
+        "name": "msiexec.exe",
+        "index": 42,
+        "sid": 0
+    },
+    {
+        "name": "ngentask.exe",
+        "index": 43,
+        "sid": 0
+    },
+    {
+        "name": "CHXSmartScreen.exe",
+        "index": 44,
+        "sid": 0
+    },
+    {
+        "name": "VSSVC.exe",
+        "index": 45,
+        "sid": 0
+    },
+    {
+        "name": "msedge.exe",
+        "index": 46,
+        "sid": 0
+    }
+]
