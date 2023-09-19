@@ -87,7 +87,7 @@ def instance_analysis(process):
 
 
 def analyse(process):
-    with open("process.json", 'r') as file:
+    with open("static/json/process.json", 'r') as file:
         data = json.load(file)
         for dictionary in data:
             if dictionary["name"] == process.Name and dictionary["sid"] == 0:

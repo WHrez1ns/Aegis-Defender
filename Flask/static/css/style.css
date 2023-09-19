@@ -136,6 +136,12 @@ body {
     gap: 30px;
 }
 
+.dashboard-body-cards a {
+    width: 100%;
+    text-decoration: none;
+    color: var(--white);
+}
+
 .dashboard-body-card {
     width: 100%;
     display: flex;
@@ -166,3 +172,70 @@ body {
     font-size: 25px;
 }
 
+/* ---------------------------------------------------------------------- s*/
+/* Processes */
+#return-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    font-size: 30px;
+    font-weight: 800;
+    color: var(--white);
+    transition: 0.4s;
+    text-decoration: none;
+}
+
+#return-button:hover {
+    color: var(--purple-2);
+    scale: 1.05;
+}
+
+.processes {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    background-color: var(--black);
+    padding: 50px;
+    border-radius: 40px;
+    gap: 25px;
+}
+
+.processes table,
+.processes th,
+.processes td {
+    border: 2px solid var(--purple-2);
+    border-collapse: collapse;
+    padding: 10px;
+    text-align: left;
+}
+
+.processes h1 {
+    font-size: 50px;
+    font-weight: 800;
+    color: var(--white);
+}
+
+.processes table {
+    width: 100%;
+    color: var(--white);
+}
+
+.processes td {
+    font-weight: 200;
+}
+
+.processes td.safe {
+    color: var(--purple);
+    font-weight: 800;
+}
+
+.processes td.suspect {
+    color: var(--suspect);
+    font-weight: bold;
+}
+
+.processes td.threat {
+    color: var(--unchecked);
+    font-weight: bold;
+}
