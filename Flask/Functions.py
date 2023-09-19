@@ -1,11 +1,12 @@
-import tkinter as tk
+import os
+import ctypes
+import sys
 from tkinter import messagebox
 import psutil
 import wmi
 from sklearn import tree
 import json
 import webview
-# import threading
 
 
 def show_help():
@@ -124,30 +125,30 @@ def start_exe():
 
 
 def main():
+    # current_file = os.path.abspath(__file__)
+
+    # if not ctypes.windll.shell32.IsUserAnAdmin():
+    #     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, current_file, None, 1)
+    #     sys.exit(0)
+    
     global features
     features = [
-        # Status List = 0 -> 20 features
         [0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 1], [1, 0, 1, 0, 0, 0], [1, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 0, 1, 0], [0, 0, 1, 0, 1, 1], [0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0], [1, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 0], [0, 1, 1, 1, 0, 0],
 
-        # Status List = 1 -> 15 features
         [1, 1, 1, 1, 0, 0], [0, 1, 1, 1, 1, 0], [0, 0, 1, 1, 1, 1], [1, 0, 1, 1, 1, 0], [1, 0, 0, 1, 1, 1], [1, 1, 0, 1, 1, 0], [1, 1, 0, 0, 1, 1], [0, 1, 1, 1, 1, 0], [0, 1, 1, 0, 1, 1], [0, 1, 0, 1, 1, 1], [1, 0, 1, 1, 1, 1], [1, 1, 0, 1, 1, 1], [1, 1, 1, 0, 1, 1], [1, 1, 1, 1, 0, 1], [1, 0, 0, 1, 1, 0], 
 
-        # Status List = 2 -> 2 feature
         [0, 1, 1, 1, 1, 1], [1, 1, 1, 1, 1, 1], 
 
-        # wannacry features
+        # wannacry standard
         # [0, 0, 1, 1, 1, 1] | [0, 1, 1, 1, 1, 1] | [1, 1, 1, 1, 1, 1]
     ]
 
     global labels
     labels = [
-        # Status ID = 0 -> 20 labels
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
-        # Status ID = 1 -> 15 labels
         1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,
 
-        # Status ID = 2 -> 2 labels
         2, 2
     ]
 
