@@ -7,14 +7,8 @@ import wmi
 from sklearn import tree
 import json
 import webview
-
-
-def show_help():
-        messagebox.showinfo("Manual", "Modos de execução:\n\n - Modo constante: este modo é responsável por verificar todos os processos que forem executados na máquina e determinar se eles podem ser possíveis ameaças.\n\nComo usar:\n\n1. Selecione a caixa correspondente ao modo de execução desejado.\n2. Clique em 'Iniciar execução'.")
-
-
-def show_exit():
-    exit()
+import time
+from threading import Thread
 
 
 def new_item_in_json(json_file, name, sid):
@@ -35,8 +29,33 @@ def new_item_in_json(json_file, name, sid):
 
 
 def on_new_process_created(process):
-    print(f"\033[38m===================================================")
-    print(f"\033[35m| Novo processo encontrado: {process.Name}")
+    print("===================================================")
+    print(f"[AVISO] Novo processo encontrado: {process.Name}")
+
+
+def extensions_analysis(process):
+    malicious_extensions = [".wnry", ".locked", ".msi", ".bat", ".cmd", ".hta", ".scr", ".pif", ".reg", ".vbs", ".wsf", ".cpl", ".jar"]
+    try:
+        processid = psutil.Process(process.ProcessId)
+        path = os.getcwd()
+        count = 0
+
+        print(f"[AVISO] Iniciando análise de extensões no diretório: {path}")
+        while count <= 50:
+            files = list(filter(os.path.isfile, os.listdir(path)))
+            for file in files:
+                for extension in malicious_extensions:
+                    if file.find(extension) != -1:
+                        processid.terminate()
+                        print(f"[PERIGOSO] Arquivo com extensão maliciosa ou suspeita identificado: {process.Name} | Status id: 2")
+                        new_item_in_json("static/json/process.json", process.Name, 2)
+                        count = 50
+                    else:
+                        print("[SEGURO] Nenhum arquivo com extensão maliciosa ou suspeita identificado")
+                        count += 1
+            time.sleep(1.5)
+    except Exception as e:
+        print(e)
 
 
 def instance_analysis(process):
@@ -56,34 +75,33 @@ def instance_analysis(process):
 
         for key, (value, threshold) in checks.items():
             if value >= threshold:
-                print(f"\033[33m| [SUSPEITO] {key} >= {threshold}: {value}")
+                print(f"[SUSPEITO] {key} >= {threshold}: {value}")
                 status_list.append(1)
             else:
-                print(f"\033[33m| [SEGURO] {key} < {threshold}: {value}")
+                print(f"[SEGURO] {key} < {threshold}: {value}")
                 status_list.append(0)
-        print(f"\033[34m| [VERIFICAÇÃO] Status list: {status_list}")
+        print(f"[VERIFICAÇÃO] Status list: {status_list}")
         status_id = classif.predict([status_list])
         if status_id == 2:
             processid.terminate()
-            print(f"\033[31m| [PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
+            print(f"[PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
             new_item_in_json("process.json", process.Name, 2)
         elif status_id == 1:
-            processid.terminate()
-            print(f"\033[31m| [SUSPEITO] Processo possui um comportamento suspeito: {process.Name} | Status id: 1")
-            new_item_in_json("process.json", process.Name, 2)
+            print(f"[SUSPEITO] Processo possui um comportamento suspeito: {process.Name} | Status id: 1")
+            extensions_analysis(process)
+            # new_item_in_json("static/json/process.json", process.Name, 1)
         else:
-            print(f"\033[32m| [SEGURO] Status id: 0 | {process.Name}")
-            new_item_in_json("process.json", process.Name, 0)
+            print(f"[SEGURO] Status id: 0 | {process.Name}")
+            extensions_analysis(process)
+            # new_item_in_json("static/json/process.json", process.Name, 0)
     except psutil.NoSuchProcess:
-        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
+        print(f"[SUSPEITO] Processo {process.Name} não encontrado")
     except psutil.AccessDenied:
-        print(
-            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}')
+        print(f'[SUSPEITO] Permissão negada para encerrar o processo {process.Name}')
     except IndexError:
-        print(f"\033[33m| [SUSPEITO] Processo {process.Name} não encontrado")
+        print(f"[SUSPEITO] Processo {process.Name} não encontrado")
     except wmi.x_wmi:
-        print(
-            f'f"\033[33m| [SUSPEITO] Permissão negada para encerrar o processo {process.Name}')
+        print(f'[SUSPEITO] Permissão negada para encerrar o processo {process.Name}')
 
 
 def analyse(process):
@@ -91,13 +109,13 @@ def analyse(process):
         data = json.load(file)
         for dictionary in data:
             if dictionary["name"] == process.Name and dictionary["sid"] == 0:
-                return print(f"\033[32m| [SEGURO] Processo {process.Name} conhecido (já analisado pelo sistema)")
-    print(f"\033[33m| [SUSPEITO] Processo {process.Name} desconhecido")
+                return print(f"[SEGURO] Processo {process.Name} conhecido (já analisado pelo sistema)")
+    print(f"[SUSPEITO] Processo {process.Name} desconhecido")
     instance_analysis(process)
 
 
 def constant_mode():
-    print("\033[36m| [AVISO] Modo constante: LIGADO")
+    print("[AVISO] Modo constante: LIGADO")
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
@@ -108,7 +126,8 @@ def constant_mode():
     except Exception as e:
         messagebox.showerror("Erro", f"Erro: {e}")
     except KeyboardInterrupt:
-        print("\033[36m| [AVISO] Modo constante: Desligado\033[0m")
+        stop_constant_mode()
+        print("[AVISO] Modo constante: Desligado\033[0m")
 
 
 def stop_constant_mode():
@@ -116,22 +135,8 @@ def stop_constant_mode():
     checkbox_state = 0
 
 
-def start_exe():
-    if checkbox_state == 0:
-        messagebox.showwarning(
-            "Aviso", "Selecione um modo de execução para iniciar")
-    else:
-        constant_mode()
-
-
 def main():
-    # current_file = os.path.abspath(__file__)
-
-    # if not ctypes.windll.shell32.IsUserAnAdmin():
-    #     ctypes.windll.shell32.ShellExecuteW(None, "runas", sys.executable, current_file, None, 1)
-    #     sys.exit(0)
-    
-    global features
+    global features, labels, classif, checkbox_state
     features = [
         [0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 1], [1, 0, 1, 0, 0, 0], [1, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 0, 1, 0], [0, 0, 1, 0, 1, 1], [0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0], [1, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 0], [0, 1, 1, 1, 0, 0],
 
@@ -143,7 +148,6 @@ def main():
         # [0, 0, 1, 1, 1, 1] | [0, 1, 1, 1, 1, 1] | [1, 1, 1, 1, 1, 1]
     ]
 
-    global labels
     labels = [
         0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
 
@@ -152,14 +156,13 @@ def main():
         2, 2
     ]
 
-    global classif
     classif = tree.DecisionTreeClassifier()
     classif.fit(features, labels)
 
-    global checkbox_state
-
+    print("===================================================")
+    print("|             Aegis Defender - 4.2.0              |")
+    print("===================================================")
     while True:
-        print("----- Welcome to Aegis -----")
         print("Select a type execution: ")
         try:
             resp = int(input(f"[1] Protect em real time\n[2] Exit\n: "))

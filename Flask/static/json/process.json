@@ -233,5 +233,15 @@
         "name": "msedge.exe",
         "index": 46,
         "sid": 0
+    },
+    {
+        "name": "dllhost.exe",
+        "index": 47,
+        "sid": 0
+    },
+    {
+        "name": "Taskmgr.exe",
+        "index": 48,
+        "sid": 0
     }
 ]
