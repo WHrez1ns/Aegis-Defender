@@ -1,8 +1,6 @@
-from threading import Thread
-from flask import Flask, render_template, url_for
-import Functions
-import time
+from flask import Flask, render_template, url_for, make_response
 import subprocess
+from Functions import *
 
 app = Flask(__name__)
 
@@ -25,10 +23,19 @@ def processes():
     url_for('static', filename='json/process.json')
     return render_template("processes.html")
 
-@app.route("/apis")
-def apis():
-    # Functions.main()
-    return "Successful API request"
+@app.route("/starting_application", methods=['GET'])
+def starting_app():
+    main()
+    return make_response(
+        "Successful response from API: Starting application"
+    )
+
+@app.route("/closing_application", methods=['GET'])
+def closing_app():
+    stop_mode()
+    return make_response(
+        "Sucessful response from API: Closing application"
+    )
 
 if __name__ == "__main__":
     thread_server = Thread(target=app.run)

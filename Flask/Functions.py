@@ -5,6 +5,8 @@ from sklearn import tree
 import json
 import time
 from pathlib import Path
+import pythoncom
+from threading import Thread
 
 
 def new_item_in_json(json_file, name, sid):
@@ -37,7 +39,7 @@ def extensions_analysis(process):
         count = 0
 
         print(f"[AVISO] Iniciando análise de extensões no diretório: {path}")
-        while count <= 40:
+        while count <= 180:
             files = os.listdir(path)
             for file in files:
                 for extension in malicious_extensions:
@@ -82,7 +84,7 @@ def instance_analysis(process):
         if status_id == 2:
             processid.terminate()
             print(f"[PERIGOSO] Ameaça neutralizada: {process.Name} | Status id: 2")
-            new_item_in_json("process.json", process.Name, 2)
+            new_item_in_json("static/json/process.json", process.Name, 2)
         elif status_id == 1:
             print(f"[SUSPEITO] Processo possui um comportamento suspeito: {process.Name} | Status id: 1")
             extensions_analysis(process)
@@ -120,24 +122,32 @@ def analyse(process):
     except Exception as e:
         print(e)
 
-def constant_mode():
+
+def constant_mode(state):
     print("===================================================")
     print("[AVISO] Modo constante: LIGADO")
     try:
         wmi_service = wmi.WMI()
         watcher = wmi_service.Win32_Process.watch_for("creation")
-        while True:
+        while state == True:
             process = watcher()
             on_new_process_created(process)
             analyse(process)
     except KeyboardInterrupt:
         print("===================================================")
         print("[AVISO] Modo constante: DESLIGADO")
+        pythoncom.CoUninitialize()
     except Exception as e:
         print(f"Erro: {e}")
 
 
+def stop_mode():
+    raise Exception("[AVISO] Modo constante: TENTANDO FINALIZAR")
+
+
 def main():
+    pythoncom.CoInitialize()
+
     global features, labels, classif, button_state
     features = [
         [0, 0, 0, 0, 0, 0], [1, 0, 0, 0, 0, 0], [1, 1, 0, 0, 0, 0], [1, 1, 1, 0, 0, 0], [0, 0, 0, 1, 0, 0], [0, 0, 0, 1, 1, 0], [0, 0, 0, 1, 1, 1], [1, 0, 1, 0, 0, 0], [1, 0, 1, 1, 0, 0], [0, 1, 0, 1, 0, 0], [0, 1, 0, 1, 1, 0], [0, 0, 1, 0, 1, 0], [0, 0, 1, 0, 1, 1], [0, 1, 0, 1, 0, 1], [1, 0, 1, 0, 1, 0], [1, 1, 0, 1, 0, 0], [1, 1, 0, 0, 1, 0], [1, 1, 0, 0, 0, 1], [0, 1, 1, 0, 0, 1], [0, 0, 1, 1, 0, 1], [0, 0, 1, 1, 1, 0], [0, 1, 1, 1, 0, 0],
@@ -161,7 +171,5 @@ def main():
     classif = tree.DecisionTreeClassifier()
     classif.fit(features, labels)
 
-    constant_mode()
-
-
-main()
+    button_state = True
+    constant_mode(button_state)

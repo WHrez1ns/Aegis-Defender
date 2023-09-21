@@ -1,6 +1,7 @@
-from Functions import *
+from Functions import os
 import ctypes
 import sys
+import webview
 
 def start_app():
     current_file = os.path.abspath(__file__)

@@ -10,7 +10,7 @@
         "sid": 0
     },
     {
-        "name": "notepad.exe",
+        "name": "nodepad.exe",
         "index": 2,
         "sid": 0
     },
@@ -275,13 +275,18 @@
         "sid": 0
     },
     {
-        "name": "fondue.exe",
+        "name": "Fondue.exe",
         "index": 55,
         "sid": 0
     },
     {
         "name": "OptionalFeatures.exe",
         "index": 56,
+        "sid": 0
+    },
+    {
+        "name": "notepad.exe",
+        "index": 57,
         "sid": 0
     }
 ]

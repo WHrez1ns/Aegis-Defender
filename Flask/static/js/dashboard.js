@@ -10,10 +10,22 @@ checkbtn.addEventListener("click", () => {
         detection_in_real_time = true;
         dashboard_header_title.innerHTML = "We are protecting you <i class='bx bx-shield-quarter'></i>";
         dashboard_checks.children.item(0).innerHTML = "<div class='dashboard-check-button checked'></div> Real-time detection mode activated";
+
+        fetch('/starting_application')
+            .then(response => response)
+            .then(jsonContent => {
+                console.log(jsonContent["status"])
+    })
     } else {
         detection_in_real_time = false;
         dashboard_header_title.innerHTML = "Activate run mode <i class='bx bxs-error'></i>";
         dashboard_checks.children.item(0).innerHTML = "<div class='dashboard-check-button unchecked'></div> Real-time detection mode disabled";
+
+        fetch('/closing_application')
+            .then(response => response)
+            .then(jsonContent => {
+                console.log(jsonContent["status"])
+            })
     }
 })
 
@@ -27,9 +39,3 @@ function processes_analyzed() {
 }
 
 processes_analyzed()
-
-fetch('/apis')
-    .then(response => response)
-    .then(jsonContent => {
-        console.log(jsonContent["status"])
-    })
