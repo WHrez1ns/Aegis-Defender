@@ -243,5 +243,45 @@
         "name": "Taskmgr.exe",
         "index": 48,
         "sid": 0
+    },
+    {
+        "name": "RiotClientServices.exe",
+        "index": 49,
+        "sid": 0
+    },
+    {
+        "name": "LeagueCrashHandler64.exe",
+        "index": 50,
+        "sid": 0
+    },
+    {
+        "name": "LeagueClient.exe",
+        "index": 51,
+        "sid": 0
+    },
+    {
+        "name": "LeagueClientUxRender.exe",
+        "index": 52,
+        "sid": 0
+    },
+    {
+        "name": "LeagueClientUx.exe",
+        "index": 53,
+        "sid": 0
+    },
+    {
+        "name": "GameBarPresenceWriter.exe",
+        "index": 54,
+        "sid": 0
+    },
+    {
+        "name": "fondue.exe",
+        "index": 55,
+        "sid": 0
+    },
+    {
+        "name": "OptionalFeatures.exe",
+        "index": 56,
+        "sid": 0
     }
 ]

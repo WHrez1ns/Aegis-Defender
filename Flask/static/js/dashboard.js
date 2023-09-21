@@ -27,3 +27,9 @@ function processes_analyzed() {
 }
 
 processes_analyzed()
+
+fetch('/apis')
+    .then(response => response)
+    .then(jsonContent => {
+        console.log(jsonContent["status"])
+    })
