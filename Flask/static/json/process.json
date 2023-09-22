@@ -10,7 +10,7 @@
         "sid": 0
     },
     {
-        "name": "nodepad.exe",
+        "name": "notepad.exe",
         "index": 2,
         "sid": 0
     },
@@ -287,6 +287,51 @@
     {
         "name": "notepad.exe",
         "index": 57,
+        "sid": 0
+    },
+    {
+        "name": "msedgewebview2.exe",
+        "index": 58,
+        "sid": 0
+    },
+    {
+        "name": "officesvcmgr.exe",
+        "index": 59,
+        "sid": 0
+    },
+    {
+        "name": "officesvcmgr.exe",
+        "index": 60,
+        "sid": 0
+    },
+    {
+        "name": "vmware.exe",
+        "index": 61,
+        "sid": 0
+    },
+    {
+        "name": "vmware.exe",
+        "index": 62,
+        "sid": 0
+    },
+    {
+        "name": "vmware-unity-helper.exe",
+        "index": 63,
+        "sid": 0
+    },
+    {
+        "name": "vmware-unity-helper.exe",
+        "index": 64,
+        "sid": 0
+    },
+    {
+        "name": "vmware-vmx.exe",
+        "index": 65,
+        "sid": 0
+    },
+    {
+        "name": "vmware-vmx.exe",
+        "index": 66,
         "sid": 0
     }
 ]

@@ -6,7 +6,6 @@ import json
 import time
 from pathlib import Path
 import pythoncom
-from threading import Thread
 
 
 def new_item_in_json(json_file, name, sid):
@@ -142,7 +141,7 @@ def constant_mode(state):
 
 
 def stop_mode():
-    raise Exception("[AVISO] Modo constante: TENTANDO FINALIZAR")
+    print("[AVISO] Modo constante: TENTANDO FINALIZAR")
 
 
 def main():
