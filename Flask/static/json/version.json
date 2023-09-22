@@ -1,0 +1,10 @@
+{
+    "version": "5.0.0",
+    "build_number": 37,
+    "release_date": "2023-09-22",
+    "release_notes": [
+        "New detection technique in parallel with instance analysis",
+        "Linking the Back-end with the graphical interface",
+        "Tested with ransomware: Wannacry, RedBoot, Jigsaw"
+    ]
+}
