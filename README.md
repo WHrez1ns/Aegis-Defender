@@ -1,7 +1,7 @@
 **Aegis Defender**
 
-* version: 5.0.0
-* build_number: 39
+* version: 5.1.1
+* build_number: 40
 * release_date: 2023-09-22
 * release_notes:
     - Creating the backup folder with the old interface and the old algorithm;

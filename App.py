@@ -5,7 +5,6 @@ from Functions import *
 
 app = Flask(__name__)
 
-# Definindo uma rota para o Flask através de um decorator | decorator: atribui uma nova funcionalidade para a função que vem abaixo
 @app.route("/")
 def dashboard():
     url_for('static', filename='css/style.css')
