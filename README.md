@@ -1,13 +1,3 @@
-**Aegis Defender**
-
-* versão: 5.1.1
-* número_de_compilação: 40
-* data_de lançamento: 22/09/2023
-* notas_de_lançamento:
-    - Criando a pasta de backup com a interface antiga e o algoritmo antigo;
-    - Mudança do idioma do software para inglês;
-    - Eliminando a necessidade de interação com a API Google e API Boxicons, deixando os arquivos localmente no projeto, possibilitando a utilização dos ícones e fontes sem necessidade de internet.
-
 ## Um Endpoint Detection and Response (EDR) otimizado para Windows
 
 O **Aégis Defender** é uma solução de segurança endpoint desenvolvida para proteger seu sistema contra a crescente ameaça dos ransomwares. Criado com Python e otimizado para sistemas Windows, nosso EDR incorpora algoritmos avançados de aprendizado de máquina, monitoramento em tempo real via WMI (Windows Management Instrumentation) e outras técnicas modernas de defesa em profundidade para oferecer proteção robusta e eficiente.
@@ -42,7 +32,6 @@ Para garantir o funcionamento correto do Aégis Defender, é crucial que o ambie
 - **Atualizações de Segurança**: Certifique-se de que todas as atualizações de segurança e patches estejam instalados.
 
 Note que essas configurações foram as utilizadas em nossos ambientes de teste e servem como um ponto de partida. Configurações de hardware mais robustas são recomendadas para um melhor desempenho.
-
 
 ## Tecnologias
 
@@ -108,10 +97,6 @@ Agradecemos por escolher nosso aplicativo e esperamos que você tenha uma excele
 
 2. **Logs**:
     - **Ainda em desenvolvimento!**
-    <!--- **Como usar**: No menu principal, selecione a opção "Logs". Aqui, você poderá visualizar todos os registros de atividades e detecções.
-    - **Descrição**: A função de logs mantém um registro detalhado de todas as atividades detectadas pelo programa, facilitando a revisão e análise de qualquer evento ou incidente.
-    - **Dica**: Verifique regularmente os logs para manter-se informado sobre as atividades do seu sistema. -->
-
 
 3. **Processos**:
     - **Como usar**: Selecione "Processos" no menu. Aqui, você verá uma lista de todos os processos em execução.
@@ -119,19 +104,6 @@ Agradecemos por escolher nosso aplicativo e esperamos que você tenha uma excele
     - **Dica**: Se notar algum processo desconhecido ou suspeito, investigue ou encerre-o para garantir a segurança do seu sistema.
 
         ![ processos](img/process.jpeg)
-
-<!-- ## Participação da Comunidade e Contribuição
-
-- **Engajamento Comunitário**: O Aégis Defender prioriza o engajamento produtivo e as contribuições da comunidade para assegurar uma solução de segurança de ponta. Portanto, instamos todos os interessados a se envolverem ativamente para melhorar continuamente o software.
-
-    1. **Feedbacks**: Acreditamos que o feedback é uma ferramenta valiosa para aprimoramento. Solicitamos que os usuários forneçam suas opiniões objetivas e construtivas sobre a performance e eficácia do Aégis Defender. Encorajamos a partilha de tais avaliações na seção FAQ do nosso [portal oficial](https://aegis.avalontech.net.br).
-
-    2. **Propostas de Melhorias**: Quaisquer ideias inovadoras ou sugestões que visem ampliar ou melhorar as capacidades do Aégis Defender são bem-vindas. Reconhecemos que a perspectiva de cada usuário pode agregar valor significativo ao projeto.
-
-    3. **Relato de Inconsistências**: Convidamos os usuários a relatarem qualquer falha ou incoerência observada no software. Garantimos que tais feedbacks serão tratados com a máxima seriedade, e esforços serão concentrados para resolver prontamente quaisquer incongruências.
-
-- **Compromisso com a Excelência**: A dedicação conjunta da equipe de desenvolvimento do Aégis Defender e da comunidade é essencial para assegurar a integridade, eficácia e robustez da solução proposta. Agradecemos antecipadamente por todas as contribuições e garantimos que cada uma será avaliada e considerada. -->
-
 
 ## Avaliações e Testes
 
@@ -142,8 +114,6 @@ Agradecemos por escolher nosso aplicativo e esperamos que você tenha uma excele
     2. **Compromisso com a Segurança**: Além dos testes específicos contra ransomwares, o Aégis Defender passa por uma série contínua de avaliações para garantir que mantém sua efetividade frente à evolução constante das ameaças. A cada atualização ou refinamento do software, novos testes são conduzidos para certificar-se de que o nível de proteção oferecido está alinhado às melhores práticas e padrões da indústria.
 
 - **Dedicação à Excelência**: A dedicação incansável da equipe por trás do Aégis Defender é refletida na meticulosidade dos testes realizados e na constante busca por aperfeiçoamento, garantindo aos usuários uma ferramenta confiável e de alta performance.
-
-
 
 ## Autores
 
@@ -186,18 +156,3 @@ A jornada do Aégis Defender é testemunha do poder da colaboração. Assim, com
     3. **Documentação**: Recomendamos também a consulta à nossa documentação extensiva, onde muitas questões comuns são abordadas e esclarecidas.
 
 Esperamos que estas vias de comunicação facilitem sua experiência com o Aégis e garantam a resolução de qualquer inquietação ou obstáculo que possa surgir.
-
-
-<!-- # Aegis Defender - ENG
-
-## Version
-
-**Aegis Defender**
-
-* version: 5.1.1
-* build_number: 40
-* release_date: 2023-09-22
-* release_notes:
-    - Creating the backup folder with the old interface and the old algorithm;
-    - Switching the software language to English;
-    - Removing the need to interact with the Google API and Boxicons API, leaving the files locally in the project, making it possible to use the icons and fonts without needing the internet.
