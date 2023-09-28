@@ -285,7 +285,7 @@
         "sid": 0
     },
     {
-        "name": "notepad.exe",
+        "name": "node.js",
         "index": 57,
         "sid": 0
     },
@@ -337,6 +337,26 @@
     {
         "name": "identity_helper.exe",
         "index": 67,
+        "sid": 0
+    },
+    {
+        "name": "ScreenSketch.exe",
+        "index": 68,
+        "sid": 0
+    },
+    {
+        "name": "PickerHost.exe",
+        "index": 69,
+        "sid": 0
+    },
+    {
+        "name": "devenv.exe",
+        "index": 70,
+        "sid": 0
+    },
+    {
+        "name": "node.exe",
+        "index": 71,
         "sid": 0
     }
 ]

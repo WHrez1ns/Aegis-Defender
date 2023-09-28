@@ -17,11 +17,11 @@ def dashboard():
 
 @app.route("/processes")
 def processes():
-    # url_for('static', filename='css/style.css')
-    # url_for('static', filename='css/colors.css')
-    # url_for('static', filename='images/aegis-logo.png')
+    url_for('static', filename='css/style.css')
+    url_for('static', filename='css/colors.css')
+    url_for('static', filename='images/aegis-logo.png')
     url_for('static', filename='js/process.js')
-    # url_for('static', filename='json/process.json')
+    url_for('static', filename='json/process.json')
     return render_template("processes.html")
 
 @app.route("/starting_application", methods=['GET'])

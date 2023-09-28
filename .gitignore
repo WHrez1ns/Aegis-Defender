@@ -153,4 +153,7 @@ cython_debug/
 
 # tests directory
 tests/
-
+ideas.md 
+backup/
+.vs/ 
+.idea/
