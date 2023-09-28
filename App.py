@@ -41,4 +41,4 @@ def closing_app():
 if __name__ == "__main__":
     thread_server = Thread(target=app.run)
     thread_server.start()
-    subprocess.Popen("Index.py", shell=True, text=True)
+    subprocess.Popen("python Index.py", shell=True, text=True)
