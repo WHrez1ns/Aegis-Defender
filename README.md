@@ -27,9 +27,10 @@ Para garantir o funcionamento correto do Aégis Defender, é crucial que o ambie
 
 - **Acesso Administrativo**: O Aégis Defender requer privilégios de administrador para acessar recursos de sistema essenciais.
 
-### Softwares Adicionais
+### Dependências e recomendações
 
-- **Python Runtime**: É necessário ter Python instalado para executar o código.
+- **Python**: É necessário ter o Python instalado para executar a ferramenta.
+- **Bibliotecas**: Para garantir o funcionamento adequado da ferramenta, é imperativo que as seguintes bibliotecas estejam previamente instaladas: WMI, scikit-learn, pywebview, psutil e Flask. No caso de o sistema não conseguir identificar a presença de alguma destas bibliotecas após a instalação, é necessário proceder com a instalação manual da biblioteca em questão.
 - **Atualizações de Segurança**: Certifique-se de que todas as atualizações de segurança e patches estejam instalados.
 
 Note que essas configurações foram as utilizadas em nossos ambientes de teste e servem como um ponto de partida. Configurações de hardware mais robustas são recomendadas para um melhor desempenho.
@@ -81,7 +82,7 @@ Se você está interessado em baixar e experimentar nosso aplicativo, siga as in
 1. **Acesse o site**: Primeiro, visite o site do [Aégis Defender](https://aegis.avalontech.net.br). Nosso site foi otimizado para ser fácil de navegar e é compatível com todos os navegadores modernos.
 2. **Navegue até o botão de download**: Em nossa página inicial, você encontrará um botão claramente marcado como "Download" ou "Baixar". Este botão foi projetado para ser visível e de fácil acesso.
 3. **Inicie o download**: Uma vez que você clique no botão de download, o processo de baixar o arquivo começará automaticamente. Depende da velocidade da sua conexão com a internet, mas, geralmente, leva apenas alguns minutos.
-4. **Siga as instruções de instalação**: Após o download ser concluído, abra o arquivo baixado e siga as instruções na tela para instalar nosso aplicativo em seu dispositivo.
+4. **Extrair o arquivo**: Após a conclusão do download, proceda à extração do arquivo compactado e, em seguida, abra a pasta denominada "Aegis Defender 5.1.1 (64 bits)". Com estas etapas finalizadas, encontra-se agora apto a usufruir da nossa ferramenta. Basta executar o arquivo "Aegis Defender 5.1.1 (64 bits).exe"!
 
 Agradecemos por escolher nosso aplicativo e esperamos que você tenha uma excelente experiência ao usá-lo!
 
