@@ -1,4 +1,4 @@
-## Solução de Endpoint Detection and Response (EDR) otimizado para Windows
+## Solução de Endpoint Detection and Response (EDR) otimizado para Windows -  PT-BR
 
 O **Aégis Defender** é uma solução de segurança endpoint desenvolvida para proteger seu sistema contra a crescente ameaça dos ransomwares. Criado com Python e otimizado para sistemas Windows, nosso EDR incorpora algoritmos avançados de aprendizado de máquina, monitoramento em tempo real via WMI (Windows Management Instrumentation) e outras técnicas modernas de defesa em profundidade para oferecer proteção robusta e eficiente.
 
@@ -174,3 +174,167 @@ A jornada do Aégis Defender é testemunha do poder da colaboração. Assim, com
     3. **Documentação**: Recomendamos também a consulta à nossa documentação extensiva, onde muitas questões comuns são abordadas e esclarecidas.
 
 Esperamos que estas vias de comunicação facilitem sua experiência com o Aégis e garantam a resolução de qualquer inquietação ou obstáculo que possa surgir.
+
+## Optimized Endpoint Detection and Response (EDR) Solution for Windows - ENG
+
+The **Aégis Defender** is an endpoint security solution designed to protect your system against the growing threat of ransomware. Built with Python and optimized for Windows systems, our EDR incorporates advanced machine learning algorithms, real-time monitoring via WMI (Windows Management Instrumentation), and other modern deep defense techniques to offer robust and efficient protection.
+
+### Key Features
+
+- **Machine Learning for Detection**: We use machine learning algorithms to enhance threat detection efficacy, allowing the system to adapt to new ransomware variants.
+  
+- **Real-Time Monitoring via WMI**: The Aégis Defender utilizes WMI to monitor system events in real-time, enhancing our detection capabilities and offering immediate response to malicious activities.
+
+- **JSON Database Verification**: The JSON database allows for swift and accurate analysis of files and processes, making the system more comprehensive than standard antivirus solutions.
+
+## Prerequisites
+
+To ensure the proper functioning of the Aégis Defender, it is crucial that the environment in which it will be executed meets certain specifications. The prerequisites below are the minimum recommendations, based on our test environments:
+
+- **Memory**: 2GB RAM (minimum)
+- **Processor**: 2 CPU cores (minimum)
+
+### Operating System
+
+- **Windows 10 x64**: The 64-bit version of Windows 10 is the supported operating system. It is highly recommended to keep the system up-to-date with the latest security updates.
+
+### Permissions
+
+- **Administrative Access**: Aégis Defender requires administrator privileges to access essential system resources.
+
+### Additional Software
+
+- **Python Runtime**: Python installation is necessary to execute the code.
+- **Security Updates**: Ensure all security updates and patches are installed.
+
+Note that these settings were used in our test environments and serve as a starting point. More robust hardware configurations are recommended for better performance.
+
+## Technologies
+
+The Aégis Defender was meticulously developed to operate within the Windows 10 environment, leveraging the advanced capabilities offered by the Python programming language. Below, you'll find the technologies that form the backbone of this project:
+
+### Operating System
+
+- **Windows 10**: Aégis Defender has been optimized to operate on Windows 10, taking advantage of the native APIs and features provided by this operating system.
+
+### Programming Language
+
+- **Python**: The chosen language for its robustness and ease of integration with various libraries and APIs, allowing for rapid prototyping and development.
+
+### Libraries
+
+The careful selection of Python libraries amplifies Aégis Defender's functionalities:
+
+- **os, ctypes, sys**: These libraries allow for deep integration with the Windows operating system.
+- **psutil, wmi**: Used for real-time monitoring of system processes and events.
+- **sklearn**: Implements machine learning algorithms for more precise threat detection.
+- **json**: Responsible for managing the JSON database, which stores crucial information.
+- **webview, time**: These libraries are used for user interface manipulation and time management.
+- **pathlib**: The pathlib library offers a more convenient, object-oriented way of working with file paths and directories on the filesystem, making path manipulation and navigation easier.
+- **pythoncom**: The pythoncom library is mainly used for integration with Windows' Component Object Model (COM) components, allowing for communication between software objects via the COM infrastructure.
+- **threading**: The threading library is employed to create and manage threads within a Python program. This is beneficial for concurrent or parallel tasks, enhancing performance and efficiency in programs requiring simultaneous processing.
+- **subprocess**: The subprocess library is used to spawn child processes or subprocesses from a Python program. It's handy for executing operating system commands, interacting with other programs, and capturing those programs' output.
+- **flask**: Flask is a lightweight micro web framework for Python. It's employed to quickly and effortlessly create web applications and APIs. Flask is known for its simplicity and extensibility, making it a popular choice for web development in Python.
+
+### Frameworks and APIs
+
+- **Flask**: This micro-framework is used to develop a web interface that allows easy interaction with the Aégis Defender.
+- **MITRE ATT&CK**: We utilize the guidelines and best practices from MITRE ATT&CK to enhance security.
+- **Google APIs**: Allows integrations with Google services for additional functionalities.
+- **Boxicons API**: This API is employed for including vector icons in web applications, enhancing the user experience with high-quality visual elements.
+
+## Installation
+
+### How to download our application from the Aégis Defender website
+
+If you're interested in downloading and trying out our application, follow the instructions below for a smooth and hassle-free experience:
+
+1. **Visit the website**: First, visit the [Aégis Defender website](https://aegis.avalontech.net.br). Our site is optimized to be user-friendly and is compatible with all modern browsers.
+2. **Navigate to the download button**: On our main page, you will find a button clearly marked as "Download." This button was designed to be visible and easily accessible.
+3. **Initiate the download**: Once you click the download button, the file download process will start automatically. Depending on your internet connection speed, it usually takes just a few minutes.
+4. **Follow the installation instructions**: After the download is completed, open the downloaded file and follow the on-screen instructions to install our application on your device.
+
+Thank you for choosing our application, and we hope you have an excellent experience using it!
+
+## Usage
+
+### Features:
+
+1. **Real-Time Detection**:
+    - **How to use**: After opening the program, locate and click the "Start Real-Time Detection" button.
+
+        ![ off](img/off.jpeg)
+
+    - **Description**: This function allows the software to monitor and identify threats or unusual activities in real-time, ensuring increased security for your system.
+
+        ![ on](img/on.jpeg)
+
+    - **Recommendation**: It's advisable to always keep this feature activated for continuous protection.
+
+2. **Logs**:
+    - **Still in development!**
+
+3. **Backup**:
+    - **Still in development!**
+
+4. **Processes**:
+    - **How to use**: Select "Processes" from the menu. Here, you'll see a list of all running processes.
+    - **Description**: This feature allows you to view and manage all active processes on your system.
+    - **Tip**: If you notice an unknown or suspicious process, investigate or terminate it to ensure your system's security.
+
+        ![ processes](img/process.jpeg)
+
+
+## Evaluations and Tests
+
+- **Rigorous Testing Methodology**: The Aégis Defender underwent meticulous evaluations using standardized methodologies and rigorous tests, ensuring its defense and response capabilities.
+
+    1. **Resilience against Ransomwares**: An integral part of the evaluation tests, the Aégis Defender was subjected to adverse scenarios involving some of the most notorious ransomwares in the cybersecurity threat landscape. This battery of tests included threats like Wannacry and Jigsaw, among others. The success achieved against these threats attests to the robustness, competence, and efficacy of our solution.
+
+    2. **Commitment to Security**: Beyond the specific tests against ransomwares, the Aégis Defender undergoes a continuous series of evaluations to ensure it maintains its effectiveness against the constantly evolving threats. With every update or refinement of the software, new tests are conducted to certify that the level of protection provided aligns with the industry's best practices and standards.
+
+- **Dedication to Excellence**: The relentless dedication of the team behind Aégis Defender is reflected in the meticulousness of the tests conducted and the constant pursuit of improvement, assuring users a reliable and high-performance tool.
+
+## Authors
+
+- **Aégis Defender Team**: The Aégis Defender stands as a milestone in cybersecurity, the result of the collaboration and dedication of three distinct professionals:
+
+    - **Júlia Barboza Brunelli**
+        - [GitHub](https://github.com/Aykie)
+        - [LinkedIn](https://www.linkedin.com/in/aykie/)
+
+    - **Nicholas Calegari Sanches**
+        - [GitHub](https://github.com/NCalegariS)
+        - [LinkedIn](https://www.linkedin.com/in/nicholas-calegari-258823242/)
+        
+    - **Renan Dias da Costa Silva**
+        - [GitHub](https://github.com/WHrez1ns)
+        - [LinkedIn](https://www.linkedin.com/in/renan-dias-da-costa-563830264/)
+
+Each team member made a significant contribution to the conception, design, and development of this project, cementing its relevance in the current cybersecurity landscape.
+
+## Acknowledgments
+
+As the digital evolution progresses, the challenges in the field of cybersecurity become even more intricate. Within this complex scenario, the conception and realization of Aégis Defender are the result of the synergistic combination of talent, dedication, and interdisciplinary collaboration. For this reason, we consider it essential to recognize and thank everyone who participated in this endeavor with us.
+
+- **FIAP Professors**: In the academic corridors and classrooms of FIAP, we found an environment that fosters critical thinking and innovation. We thank the professors who, with deep knowledge and vast experience, provided precise guidance, thus shaping the theoretical and practical foundation of Aégis Defender.
+
+- **Pride Security**: In such a competitive and dynamic market, trusting young talents and challenging conventional limits is commendable. Pride Security not only proposed a challenge to us but also became an integral part of our learning and development process.
+
+- **Avalon Tech**: Collaborating with Avalon Tech was of utmost importance in bringing Aégis Defender to life, and we are grateful for their support of the project.
+
+The journey of Aégis Defender bears witness to the power of collaboration. Thus, with humility and respect, we thank each individual and institution that supported us, either directly or indirectly, and believed in our vision. We are at the beginning of a journey that, we hope, will make a significant contribution to digital security.
+
+
+## Support and Technical Assistance
+
+- **Communication Channels**: We are committed to providing efficient and agile support to Aégis users. If you encounter difficulties, have questions about the application, or need technical guidance:
+
+    1. **Contact Page**: The first option is to visit our [contact page on the Avalon Tech website](https://avalontech.net.br/contact.php), where we provide a form for questions and suggestions.
+
+    2. **Email**: For more direct support, please do not hesitate to send us an email. Our technical support team is always ready to help and will respond to your message as soon as possible.
+
+    3. **Documentation**: We also recommend consulting our extensive documentation, where many common questions are addressed and clarified.
+
+We hope these communication channels facilitate your experience with Aégis and ensure the resolution of any concerns or challenges that may arise.
+
